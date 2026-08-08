@@ -58,11 +58,15 @@ function render(rec) {
 
   const rowsHtml = [...ok, ...gap].map(r => {
     const st = r.status === 'ok' ? '<span class="st ok">✓ 符合</span>' : '<span class="st gap">△ 需补条件</span>';
-    const amt = r.status === 'ok' ? `<div style="font-weight:700;color:var(--primary)">¥${r.amount} 万${r.estimated ? '（估）' : ''}</div>` : '<div style="color:var(--muted)">—</div>';
+    const amt = r.nonCash
+      ? '<div style="font-weight:700;color:#7c3aed">税收优惠</div><div style="color:var(--muted);font-size:12px">非资金补贴</div>'
+      : (r.status === 'ok' ? `<div style="font-weight:700;color:var(--primary)">¥${r.amount} 万${r.estimated ? '（估）' : ''}</div>` : '<div style="color:var(--muted)">—</div>');
     const gaps = (r.gaps && r.gaps.length) ? `<div style="color:#b8860b;font-size:12px;margin-top:4px">待补：${r.gaps.join('；')}</div>` : '';
     const dist = r.scope ? (r.scope.type === 'citywide' ? '全市' : (r.scope.districts || []).join('/')) : '';
+    const win = (r.deadline || r.batch) ? `<div style="color:#0f766e;font-size:12px;margin-top:4px">🗓 申报窗口：${r.deadline || '—'}　|　批次：${r.batch || '—'}</div>` : '';
+    const taxNote = r.nonCash ? `<div style="color:#7c3aed;font-size:12px;margin-top:4px">💡 税收优惠（非直接资金补贴），不计入可申报金额</div>` : '';
     return `<div class="r-row">
-      <div class="l"><b>${r.name}</b><div class="s">${r.summary}</div><div class="s">来源：${r.sourceUrl ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source}</a>` : r.source}　|　区域：${dist}${r.estimated ? '　|　⚠️估算' : ''}${r.sourceUrl ? `　|　<a href="${r.sourceUrl}" target="_blank" rel="noopener" style="color:#c8102e">政策原文 ›</a>` : ''}</div>${gaps}</div>
+      <div class="l"><b>${r.name}</b><div class="s">${r.summary}</div><div class="s">来源：${r.sourceUrl ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source}</a>` : r.source}　|　区域：${dist}${r.estimated ? '　|　⚠️估算' : ''}${r.sourceUrl ? `　|　<a href="${r.sourceUrl}" target="_blank" rel="noopener" style="color:#c8102e">政策原文 ›</a>` : ''}</div>${gaps}${win}${taxNote}</div>
       <div class="r">${st}${amt}</div>
     </div>`;
   }).join('');

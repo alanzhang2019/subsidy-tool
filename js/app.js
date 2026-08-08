@@ -58,15 +58,17 @@ function render(data, profile) {
   sorted.forEach(r => {
     if (r.status === 'no') return; // 不符合的不展示，避免信息过载
     const card = document.createElement('div');
-    card.className = `card ${r.status}`;
-    const tagText = r.status === 'ok' ? '完全符合' : '需补条件';
-    const amt = r.status === 'ok' ? `预估 ${r.amount} 万元` : '—';
+    card.className = `card ${r.status}${r.nonCash ? ' tax' : ''}`;
+    const tagText = r.nonCash ? '税收优惠' : (r.status === 'ok' ? '完全符合' : '需补条件');
+    const amt = r.nonCash ? '非资金补贴' : (r.status === 'ok' ? `预估 ${r.amount} 万元` : '—');
     card.innerHTML = `
-      <div class="head"><div class="name">${r.name}</div><div class="tag ${r.status}">${tagText}</div></div>
+      <div class="head"><div class="name">${r.name}</div><div class="tag ${r.status}${r.nonCash ? ' tax' : ''}">${tagText}</div></div>
       <div class="amt">${amt}</div>
       <div class="desc">${r.summary}</div>
+      ${r.nonCash ? '<div class="est">💡 税收优惠（非直接资金补贴），可降低企业税负，不计入可申报金额</div>' : ''}
       ${r.estimated ? '<div class="est">⚠️ 估算值，以官方最新指南为准</div>' : ''}
       ${r.gaps && r.gaps.length ? `<div class="gap">待补：${r.gaps.join('；')}</div>` : ''}
+      ${ (r.deadline || r.batch) ? `<div class="win">🗓 申报窗口：${r.deadline || '—'}　|　批次：${r.batch || '—'}</div>` : '' }
       <div class="src">来源：${r.sourceUrl ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source}</a>` : r.source}　|　适用区域：${r.district}${r.sourceUrl ? `　|　<a href="${r.sourceUrl}" target="_blank" rel="noopener" style="color:#c8102e">政策原文 ›</a>` : ''}</div>`;
     cards.appendChild(card);
   });
