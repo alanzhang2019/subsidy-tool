@@ -1,4 +1,4 @@
-name: 政策库监控
+name: 政策库自动监控
 
 on:
   schedule:
@@ -6,8 +6,7 @@ on:
   workflow_dispatch: {}   # 支持在 Actions 页手动触发
 
 permissions:
-  contents: write         # 写回 monitor_state.json 缓存
-  issues: write           # 创建/评论 policy-monitor issue
+  contents: write         # 自动写回 policies.json(归档)/policies_archived.json/policies_draft.json/monitor_state.json/monitor_changelog.md
 
 jobs:
   monitor:
@@ -24,18 +23,17 @@ jobs:
         with:
           node-version: '22'
 
-      - name: 运行监控
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
+      - name: 运行自动监控
         run: node .github/scripts/monitor_policies.js
 
-      - name: 提交监控状态缓存
+      - name: 提交自动巡检结果
         run: |
-          git config user.name "policy-monitor[bot]"
-          git config user.email "bot@workbuddy.local"
-          git add monitor_state.json
+          git config user.name "policy-bot[bot]"
+          git config user.email "policy-bot@users.noreply.github.com"
+          git add policies.json policies_archived.json policies_draft.json monitor_state.json monitor_changelog.md
           if ! git diff --cached --quiet; then
-            git commit -m "chore: 更新政策监控状态缓存"
+            git commit -m "bot: 自动巡检归档失效/过期政策 + 采集新政草稿"
             git push
+          else
+            echo "无变更，跳过提交"
           fi

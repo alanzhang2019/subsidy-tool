@@ -1,0 +1,61 @@
+[
+  {
+    "id": "ba-renovate",
+    "name": "宝安区重点企业综合改造补贴",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "requireScale": [
+      "规上"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "[已过期·待续期确认] 宝安区鼓励上市/国家级单项冠军/国家级小巨人/年产值5亿+工业企业长租生产研发用房并综合改造，给予补贴（比例以指南为准，需5年以上租约+备案）。",
+    "source": "宝安区重点企业综合改造补贴项目申报通知（2025.12）",
+    "estimated": true,
+    "deadline": "2025.12.29-2026.2.28受理",
+    "sourceUrl": "https://www.baoan.gov.cn/jjcj/zwgk/qt/tzgg/content/post_12576256.html",
+    "batch": "2026年批次",
+    "expires": "2026-02-28",
+    "archivedAt": "2026-08-08T16:20:10.226Z",
+    "archiveReason": "expires 已过(2026-02-28)，政策窗口结束"
+  },
+  {
+    "id": "ps-semi",
+    "name": "坪山区半导体与集成电路产业支持",
+    "category": "半导体",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "坪山"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "[已过期·待续期确认] 坪山区支持半导体与集成电路：流片、设备、材料、封测、EDA等按投入比例资助（依坪山区半导体专项申报指南）。",
+    "source": "坪山区半导体与集成电路产业发展专项",
+    "estimated": true,
+    "deadline": "年度申报（有效期至2025.12.31，待续期）",
+    "batch": "年度一批",
+    "sourceUrl": "https://www.sz.gov.cn/attachment/1/1404/1404389/10876273.pdf",
+    "expires": "2025-12-31",
+    "archivedAt": "2026-08-08T16:20:10.226Z",
+    "archiveReason": "expires 已过(2025-12-31)，政策窗口结束"
+  }
+]
