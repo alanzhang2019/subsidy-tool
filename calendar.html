@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深圳补贴 · 申报日历</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.cal-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:18px}
+.cal-controls .nav-month{display:flex;align-items:center;gap:8px}
+.cal-controls .nav-month b{font-size:16px;min-width:120px;text-align:center}
+.cal-controls select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:#fcfcfd}
+.cal-controls .btn{width:auto;padding:8px 14px;margin-top:0;font-size:13px}
+.cal-controls label.chk{display:flex;align-items:center;gap:6px;font-size:13px;color:#444;cursor:pointer}
+.layout-cal{display:grid;grid-template-columns:1fr 320px;gap:22px;align-items:start}
+@media(max-width:860px){.layout-cal{grid-template-columns:1fr}}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.cal-weekday{text-align:center;font-size:12px;color:var(--muted);padding:6px 0;font-weight:600}
+.cal-cell{min-height:96px;background:#fcfcfd;border:1px solid var(--line);border-radius:10px;padding:6px;position:relative;cursor:default}
+.cal-cell.out{opacity:.4;background:#fafafa}
+.cal-cell.today{box-shadow:inset 0 0 0 2px var(--primary)}
+.cal-cell .dnum{font-size:12px;color:var(--muted);font-weight:600;position:absolute;top:6px;right:8px}
+.cal-cell .chips{margin-top:18px;display:flex;flex-direction:column;gap:4px}
+.cal-chip{font-size:11px;line-height:1.3;padding:3px 6px;border-radius:6px;color:#fff;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:3px solid rgba(0,0,0,.18)}
+.cal-chip:hover{filter:brightness(1.08)}
+.cal-chip.deadline{outline:2px solid var(--bad);outline-offset:-2px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.legend .lg{display:flex;align-items:center;gap:5px;font-size:11px;color:#444}
+.legend .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.side h3{font-size:14px;margin:14px 0 8px;padding-left:8px;border-left:3px solid var(--primary)}
+.side .always{font-size:12px;color:#444;padding:7px 10px;border:1px solid var(--line);border-radius:8px;margin-bottom:7px;cursor:pointer}
+.side .always:hover{background:#fff6f7}
+.side .always .c{font-size:10px;color:#fff;padding:1px 6px;border-radius:10px;margin-right:6px}
+.modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal-mask.show{display:flex}
+.modal{background:#fff;border-radius:14px;max-width:560px;width:100%;max-height:86vh;overflow:auto;padding:22px;box-shadow:var(--shadow)}
+.modal h2{font-size:18px;margin-bottom:10px}
+.modal .mtags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.modal .mrow{font-size:13px;margin:7px 0;display:flex;gap:8px}
+.modal .mrow b{color:#555;min-width:74px;flex-shrink:0}
+.modal .amt{font-size:16px;font-weight:800;color:var(--primary)}
+.modal a.src{color:#0a4a8a;word-break:break-all;font-size:12px}
+.modal .close{float:right;cursor:pointer;color:var(--muted);font-size:20px;line-height:1}
+.empty-cal{text-align:center;color:var(--muted);font-size:13px;padding:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>深圳补贴 · 申报日历</h1>
+    <p>把政策申报窗口与截止日铺到日历上，不再错过受理期</p>
+    <span class="badge">纯前端 · 数据本地加载自 policies.json · 与自测工具同源</span>
+    <div class="nav">
+      <a href="index.html">自测工具</a>
+      <a href="report.html">报告示例</a>
+      <a href="calendar.html">申报日历</a>
+    </div>
+  </header>
+
+  <div class="cal-controls panel">
+    <div class="nav-month">
+      <button class="btn" id="prevM">‹</button>
+      <b id="monthLabel">—</b>
+      <button class="btn" id="nextM">›</button>
+      <button class="btn ghost" id="todayBtn" style="margin-left:6px">今天</button>
+    </div>
+    <select id="fDistrict"><option value="">全部区域</option></select>
+    <select id="fCategory"><option value="">全部分类</option></select>
+    <label class="chk"><input type="checkbox" id="fOpen"> 仅看受理中</label>
+  </div>
+
+  <div class="layout-cal">
+    <div class="panel">
+      <div class="cal-grid" id="weekdays"></div>
+      <div class="cal-grid" id="grid"></div>
+      <div class="disclaimer">
+        说明：日历基于政策库中的 <code>deadline</code>（受理窗口/批次）与 <code>expires</code>（截止日）结构化字段生成；
+        仅标注具体月份/日期的政策会落在格子里，<b>「常年/年度受理」类政策见右侧常驻列表</b>。所有日期以官方最新申报指南为准，本视图不构成申报承诺。
+      </div>
+    </div>
+
+    <div class="panel side">
+      <h3>图例（按分类）</h3>
+      <div class="legend" id="legend"></div>
+      <h3>常驻受理政策（常年 / 年度批次）</h3>
+      <div id="alwaysList"><div class="empty-cal">加载中…</div></div>
+    </div>
+  </div>
+
+  <footer>深圳补贴匹配自测工具 · © 2026</footer>
+</div>
+
+<div class="modal-mask" id="mask">
+  <div class="modal" id="modal">
+    <span class="close" id="closeModal">×</span>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="js/calendar.js"></script>
+</body>
+</html>
