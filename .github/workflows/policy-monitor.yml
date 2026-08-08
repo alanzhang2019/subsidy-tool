@@ -1,0 +1,41 @@
+name: 政策库监控
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'   # 每周一 02:00 UTC = 北京 10:00
+  workflow_dispatch: {}   # 支持在 Actions 页手动触发
+
+permissions:
+  contents: write         # 写回 monitor_state.json 缓存
+  issues: write           # 创建/评论 policy-monitor issue
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 配置 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 运行监控
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node .github/scripts/monitor_policies.js
+
+      - name: 提交监控状态缓存
+        run: |
+          git config user.name "policy-monitor[bot]"
+          git config user.email "bot@workbuddy.local"
+          git add monitor_state.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: 更新政策监控状态缓存"
+            git push
+          fi
