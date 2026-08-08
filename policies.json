@@ -1328,11 +1328,11 @@
       "value": 0
     },
     "summary": "小微企业招用毕业2年内高校毕业生并签订1年以上劳动合同、缴纳社保的，按单位承担的社会保险费用给予补贴，最长不超过2年（依实际吸纳人数核算）。",
-    "source": "深圳市小微企业吸纳高校毕业生社保补贴",
+    "source": "深圳市人社局《就业创业补贴申请办理清单》",
     "estimated": true,
-    "deadline": "常年受理",
+    "deadline": "常年受理（满足缴社保满3个月起6个月内首次申请）",
     "batch": "常年多批次",
-    "sourceUrl": "https://wsbs.sz.gov.cn/shenzhen/project/phoneGuide?code=70003000169558324813440308"
+    "sourceUrl": "https://hrss.sz.gov.cn/tzgg/content/post_9139631.html"
   },
   {
     "id": "sz-flexible",
