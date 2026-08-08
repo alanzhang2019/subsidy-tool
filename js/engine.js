@@ -103,6 +103,7 @@
         deadline: p.deadline || '',
         batch: p.batch || '',
         nonCash: !!p.nonCash,
+        expires: p.expires || null,
         district: scope.type === 'citywide' ? '全市' : (scope.districts || []).join('/'),
         status: r.status,
         gaps: r.gaps,

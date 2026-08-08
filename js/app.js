@@ -1,6 +1,15 @@
 // 前端逻辑（纯静态版）：读取画像 -> 本地引擎匹配 -> 渲染 -> 生成可分享诊断书
 const $ = id => document.getElementById(id);
 
+function expNote(ex){
+  if(!ex) return '';
+  const d = new Date(ex + 'T00:00:00'); const now = new Date();
+  const days = (d - now) / 86400000;
+  if(days < 0) return ' <span class="exp expired">⚠️ 政策已到期，待续期确认</span>';
+  if(days < 90) return ' <span class="exp expiring">⏳ 即将到期（' + Math.ceil(days) + '天）</span>';
+  return '';
+}
+
 let POLICIES = null;
 async function loadPolicies() {
   if (!POLICIES) {
@@ -58,7 +67,7 @@ function render(data, profile) {
   sorted.forEach(r => {
     if (r.status === 'no') return; // 不符合的不展示，避免信息过载
     const card = document.createElement('div');
-    card.className = `card ${r.status}${r.nonCash ? ' tax' : ''}`;
+    card.className = `card ${r.status}${r.nonCash ? ' tax' : ''}${r.expires && new Date(r.expires + 'T00:00:00') < new Date() ? ' expired' : ''}`;
     const tagText = r.nonCash ? '税收优惠' : (r.status === 'ok' ? '完全符合' : '需补条件');
     const amt = r.nonCash ? '非资金补贴' : (r.status === 'ok' ? `预估 ${r.amount} 万元` : '—');
     card.innerHTML = `
@@ -68,7 +77,7 @@ function render(data, profile) {
       ${r.nonCash ? '<div class="est">💡 税收优惠（非直接资金补贴），可降低企业税负，不计入可申报金额</div>' : ''}
       ${r.estimated ? '<div class="est">⚠️ 估算值，以官方最新指南为准</div>' : ''}
       ${r.gaps && r.gaps.length ? `<div class="gap">待补：${r.gaps.join('；')}</div>` : ''}
-      ${ (r.deadline || r.batch) ? `<div class="win">🗓 申报窗口：${r.deadline || '—'}　|　批次：${r.batch || '—'}</div>` : '' }
+      ${ (r.deadline || r.batch || r.expires) ? `<div class="win">🗓 申报窗口：${r.deadline || '—'}　|　批次：${r.batch || '—'}${r.expires ? `　|　有效期至 ${r.expires}` : ''}</div>${r.expires ? expNote(r.expires) : ''}` : '' }
       <div class="src">来源：${r.sourceUrl ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source}</a>` : r.source}　|　适用区域：${r.district}${r.sourceUrl ? `　|　<a href="${r.sourceUrl}" target="_blank" rel="noopener" style="color:#c8102e">政策原文 ›</a>` : ''}</div>`;
     cards.appendChild(card);
   });

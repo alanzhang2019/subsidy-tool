@@ -1,6 +1,15 @@
 // 报告页（纯静态版）：从 URL hash 读取编码后的画像 -> 本地引擎匹配 -> 渲染报告
 const $ = id => document.getElementById(id);
 
+function expNote(ex){
+  if(!ex) return '';
+  const d = new Date(ex + 'T00:00:00'); const now = new Date();
+  const days = (d - now) / 86400000;
+  if(days < 0) return ' <span class="exp expired">⚠️ 政策已到期，待续期确认</span>';
+  if(days < 90) return ' <span class="exp expiring">⏳ 即将到期（' + Math.ceil(days) + '天）</span>';
+  return '';
+}
+
 const hash = location.hash.startsWith('#') ? location.hash.slice(1) : location.hash;
 const params = new URLSearchParams(hash);
 const autoPrint = params.get('print') === '1';
@@ -63,9 +72,9 @@ function render(rec) {
       : (r.status === 'ok' ? `<div style="font-weight:700;color:var(--primary)">¥${r.amount} 万${r.estimated ? '（估）' : ''}</div>` : '<div style="color:var(--muted)">—</div>');
     const gaps = (r.gaps && r.gaps.length) ? `<div style="color:#b8860b;font-size:12px;margin-top:4px">待补：${r.gaps.join('；')}</div>` : '';
     const dist = r.scope ? (r.scope.type === 'citywide' ? '全市' : (r.scope.districts || []).join('/')) : '';
-    const win = (r.deadline || r.batch) ? `<div style="color:#0f766e;font-size:12px;margin-top:4px">🗓 申报窗口：${r.deadline || '—'}　|　批次：${r.batch || '—'}</div>` : '';
+    const win = (r.deadline || r.batch || r.expires) ? `<div style="color:#0f766e;font-size:12px;margin-top:4px">🗓 申报窗口：${r.deadline || '—'}　|　批次：${r.batch || '—'}${r.expires ? `　|　有效期至 ${r.expires}` : ''}</div>${r.expires ? expNote(r.expires) : ''}` : '';
     const taxNote = r.nonCash ? `<div style="color:#7c3aed;font-size:12px;margin-top:4px">💡 税收优惠（非直接资金补贴），不计入可申报金额</div>` : '';
-    return `<div class="r-row">
+    return `<div class="r-row${r.expires && new Date(r.expires + 'T00:00:00') < new Date() ? ' expired' : ''}">
       <div class="l"><b>${r.name}</b><div class="s">${r.summary}</div><div class="s">来源：${r.sourceUrl ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source}</a>` : r.source}　|　区域：${dist}${r.estimated ? '　|　⚠️估算' : ''}${r.sourceUrl ? `　|　<a href="${r.sourceUrl}" target="_blank" rel="noopener" style="color:#c8102e">政策原文 ›</a>` : ''}</div>${gaps}${win}${taxNote}</div>
       <div class="r">${st}${amt}</div>
     </div>`;

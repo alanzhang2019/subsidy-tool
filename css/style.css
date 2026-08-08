@@ -40,6 +40,13 @@ header p{opacity:.9;margin-top:6px;font-size:14px}
 .card .src{font-size:11px;color:var(--muted);margin-top:8px}
 .card .est{font-size:11px;color:#b8860b;margin-top:4px}
 .card .win{font-size:11px;color:#0f766e;margin-top:8px;background:#eafaf5;padding:6px 10px;border-radius:7px}
+.card.expired{opacity:.72;border-left:4px solid #b91c1c}
+.card.expired .name{color:#b91c1c}
+.exp{font-size:11px;font-weight:600;margin-left:4px}
+.exp.expired{color:#b91c1c}
+.exp.expiring{color:#b45309}
+.r-row.expired{background:#fef2f2}
+.r-row.expired .l b{color:#b91c1c}
 .tag.tax{background:#f3e8ff;color:#7c3aed}
 .card.tax::before{background:#7c3aed}
 .empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:14px}
