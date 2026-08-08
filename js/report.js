@@ -46,7 +46,7 @@ async function init() {
 }
 
 function showErr(msg) {
-  $('content').innerHTML = `<div class="err"><div style="font-size:40px;opacity:.3">📭</div>${msg}</div>`;
+  $('content').innerHTML = `<div class="err"><div style="font-size:40px;opacity:.3">📭</div><p>${msg}</p><a href="index.html" class="btn" style="margin-top:16px;display:inline-block;padding:12px 28px;font-size:15px">← 返回补贴自测</a></div>`;
 }
 
 function render(rec) {
