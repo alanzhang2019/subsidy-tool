@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深圳补贴匹配自测工具</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>深圳补贴匹配自测工具</h1>
+    <p>输入企业画像，一键测算你能申报的政府补贴与预估金额</p>
+    <span class="badge">纯前端版 · 数据仅在本地浏览器计算、不上传服务器 · 可离线使用</span>
+    <div class="nav"><a href="report.html">报告示例</a></div>
+  </header>
+
+  <div class="layout">
+    <div class="panel">
+      <h2>企业画像</h2>
+      <div class="field">
+        <label>所在区</label>
+        <select id="district">
+          <option value="市级">深圳市级（不限区）</option>
+          <option value="福田">福田区</option><option value="南山">南山区</option>
+          <option value="龙岗">龙岗区</option><option value="宝安">宝安区</option>
+          <option value="龙华">龙华区</option><option value="罗湖">罗湖区</option>
+          <option value="光明">光明区</option><option value="坪山">坪山区</option>
+          <option value="盐田">盐田区</option><option value="大鹏">大鹏新区</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>所属行业</label>
+        <select id="industry">
+          <option value="制造">制造业</option>
+          <option value="科技">科技研发 / 电子信息</option>
+          <option value="软件">软件与信息服务</option>
+          <option value="跨境">跨境电商</option>
+          <option value="传统">传统优势产业（服装/家具/珠宝/钟表等）</option>
+          <option value="其他">其他行业</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>企业规模</label>
+        <select id="scale">
+          <option value="规上">规上工业企业 / 限上企业</option>
+          <option value="中小">中小企业（非规上）</option>
+          <option value="初创">初创企业（成立&lt;3年）</option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>国家高新企业</label>
+          <select id="hightech"><option value="否">否</option><option value="是">是</option></select>
+        </div>
+        <div class="field">
+          <label>专精特新层级</label>
+          <select id="zxzz">
+            <option value="无">无</option><option value="创新型">创新型中小企业</option>
+            <option value="省级">省级专精特新</option><option value="小巨人">国家级小巨人</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>上年营业收入（万元）</label><input id="revenue" type="number" min="0" placeholder="例如 2000"><div class="hint">用于判断企业规模与门槛</div></div>
+      <div class="row">
+        <div class="field"><label>员工人数</label><input id="emp" type="number" min="0" placeholder="例如 50"></div>
+        <div class="field"><label>年度研发投入（万元）</label><input id="rnd" type="number" min="0" placeholder="例如 300"></div>
+      </div>
+      <div class="field"><label>技改 / 设备投资（万元）</label><input id="tech" type="number" min="0" placeholder="例如 500"><div class="hint">技改补贴的核算基数</div></div>
+      <div class="field"><label>数字化改造投入（万元）</label><input id="digi" type="number" min="0" placeholder="例如 60"><div class="hint">MES/云化软件/工业互联网等投入</div></div>
+      <button class="btn" id="matchBtn">开始匹配补贴</button>
+    </div>
+
+    <div class="panel" id="resultPanel">
+      <h2>匹配结果</h2>
+      <div class="empty" id="emptyState"><div class="icon">🔍</div>填写左侧企业画像，点击「开始匹配补贴」查看你能申报的政策与预估金额</div>
+      <div class="summary" id="summary" style="display:none">
+        <div class="big" id="sumAmt">¥0</div>
+        <div class="sub" id="sumSub"></div>
+      </div>
+      <div class="share" id="share">
+        <b>✅ 已生成专属诊断书</b>
+        <div class="hint">分享链接（企业可自行查看 / 你后续跟进）：</div>
+        <code id="shareUrl"></code>
+        <div class="row">
+          <button class="btn sec" id="viewBtn">查看诊断书</button>
+          <button class="btn ghost" id="pdfBtn">打印 / 存为 PDF</button>
+        </div>
+      </div>
+      <div id="cards"></div>
+      <div class="disclaimer">
+        说明：本工具政策库基于深圳市及各区公开申报指南的结构化整理（市级 + 10 区，含技改、专精特新、数字化、研发、高企等），匹配与金额测算为简化模型，<b>不构成申报承诺</b>。真实申报须以官方最新指南、专项审计与专家评审结果为准；<b>企业画像仅在你的浏览器本地计算，不会上传到任何服务器</b>。虚假材料将列入失信名单并追责。
+      </div>
+    </div>
+  </div>
+  <footer>深圳补贴匹配自测工具 · © 2026</footer>
+</div>
+
+<script src="js/engine.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

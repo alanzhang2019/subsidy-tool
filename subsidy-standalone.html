@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深圳补贴匹配自测工具</title>
+<style>
+:root{
+  --primary:#c8102e; --primary-dark:#9e0c24; --bg:#f5f6f8; --card:#fff;
+  --text:#1f2329; --muted:#8a9099; --line:#e8eaed;
+  --ok:#1f9d55; --warn:#e0a106; --bad:#c8102e; --shadow:0 2px 12px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:24px 16px 60px}
+header{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border-radius:16px;padding:26px 32px;box-shadow:var(--shadow);margin-bottom:22px}
+header h1{font-size:23px;font-weight:700}
+header p{opacity:.9;margin-top:6px;font-size:14px}
+.badge{display:inline-block;background:rgba(255,255,255,.18);font-size:12px;padding:3px 10px;border-radius:20px;margin-top:10px}
+.layout{display:grid;grid-template-columns:380px 1fr;gap:22px;align-items:start}
+@media(max-width:860px){.layout{grid-template-columns:1fr}}
+.panel{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:22px}
+.panel h2{font-size:16px;font-weight:700;margin-bottom:16px;padding-left:10px;border-left:4px solid var(--primary)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.field input,.field select{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;font-size:14px;background:#fcfcfd}
+.field input:focus,.field select:focus{outline:none;border-color:var(--primary);background:#fff}
+.field .hint{font-size:11px;color:var(--muted);margin-top:4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{width:100%;background:var(--primary);color:#fff;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:600;cursor:pointer;transition:.15s;margin-top:6px}
+.btn:hover{background:var(--primary-dark)}
+.btn.sec{background:#fff;color:var(--primary);border:1px solid var(--primary)}
+.btn.ghost{background:#f0f1f3;color:#333}
+.summary{background:linear-gradient(135deg,#fff,#fff6f7);border:1px solid #ffe0e4;border-radius:12px;padding:18px;margin-bottom:18px}
+.summary .big{font-size:30px;font-weight:800;color:var(--primary)}
+.summary .sub{font-size:13px;color:var(--muted);margin-top:2px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;position:relative;overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.card.ok::before{background:var(--ok)} .card.warn::before{background:var(--warn)} .card.bad::before{background:var(--bad)}
+.card .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.card .name{font-size:15px;font-weight:700}
+.card .tag{font-size:11px;padding:3px 9px;border-radius:20px;white-space:nowrap;font-weight:600}
+.tag.ok{background:#e6f6ee;color:var(--ok)} .tag.warn{background:#fdf4e0;color:var(--warn)} .tag.bad{background:#fdeaec;color:var(--bad)}
+.card .amt{font-size:18px;font-weight:800;color:var(--primary);margin:8px 0 4px}
+.card .desc{font-size:13px;color:#444;margin-top:6px}
+.card .gap{font-size:12px;color:var(--warn);margin-top:8px;background:#fffaf0;padding:7px 10px;border-radius:7px}
+.card .src{font-size:11px;color:var(--muted);margin-top:8px}
+.card .est{font-size:11px;color:#b8860b;margin-top:4px}
+.empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:14px}
+.empty .icon{font-size:40px;opacity:.3;margin-bottom:10px}
+.disclaimer{font-size:11px;color:var(--muted);margin-top:18px;line-height:1.5;border-top:1px dashed var(--line);padding-top:12px}
+.share{background:#eef7ff;border:1px solid #cfe4ff;border-radius:12px;padding:16px;margin-bottom:18px;display:none}
+.share.show{display:block}
+.share code{display:block;background:#fff;border:1px solid #d6e6ff;border-radius:6px;padding:8px;font-size:12px;margin:8px 0;word-break:break-all;color:#0a4a8a}
+.share .row{margin-top:8px}
+footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left}
+th{background:#fafafa;font-weight:600;color:#555}
+.est-tag{font-size:10px;background:#fff3da;color:#b8860b;padding:1px 6px;border-radius:4px}
+.nav{display:flex;gap:14px;margin-top:10px}
+.nav a{color:#fff;opacity:.9;font-size:13px;text-decoration:underline}
+
+
+.report{max-width:820px;margin:0 auto}
+.r-head{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border-radius:16px;padding:28px 32px;margin-bottom:20px}
+.r-head h1{font-size:22px}
+.r-head .meta{opacity:.9;font-size:13px;margin-top:8px}
+.r-sec{background:#fff;border-radius:12px;box-shadow:var(--shadow);padding:18px 22px;margin-bottom:16px}
+.r-sec h3{font-size:15px;border-left:4px solid var(--primary);padding-left:10px;margin-bottom:12px}
+.kv{font-size:14px;color:#333;line-height:2}
+.kv b{display:inline-block;min-width:96px;color:#666}
+.total-big{font-size:26px;font-weight:800;color:var(--primary)}
+.r-row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.r-row .l{font-size:14px}
+.r-row .l .s{font-size:12px;color:#888;margin-top:3px}
+.r-row .r{text-align:right;white-space:nowrap}
+.st{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
+.st.ok{background:#e6f6ee;color:var(--ok)} .st.gap{background:#fdf4e0;color:var(--warn)}
+.toolbar{max-width:820px;margin:0 auto 16px;display:flex;gap:10px;align-items:center}
+.toolbar .btn{width:auto;padding:10px 18px}
+.toolbar a{color:var(--primary);font-size:13px;text-decoration:none}
+.err{text-align:center;color:var(--muted);padding:60px 20px}
+@media print{.toolbar{display:none}.r-head,.r-sec{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap" id="toolView">
+
+  <header>
+    <h1>深圳补贴匹配自测工具</h1>
+    <p>输入企业画像，一键测算你能申报的政府补贴与预估金额</p>
+    <span class="badge">纯前端版 · 数据仅在本地浏览器计算、不上传服务器 · 单文件可离线使用</span>
+  </header>
+  <div class="layout">
+    <div class="panel">
+      <h2>企业画像</h2>
+      <div class="field"><label>所在区</label><select id="district">
+        <option value="市级">深圳市级（不限区）</option>
+        <option value="福田">福田区</option><option value="南山">南山区</option>
+        <option value="龙岗">龙岗区</option><option value="宝安">宝安区</option>
+        <option value="龙华">龙华区</option><option value="罗湖">罗湖区</option>
+        <option value="光明">光明区</option><option value="坪山">坪山区</option>
+        <option value="盐田">盐田区</option><option value="大鹏">大鹏新区</option>
+      </select></div>
+      <div class="field"><label>所属行业</label><select id="industry">
+        <option value="制造">制造业</option>
+        <option value="科技">科技研发 / 电子信息</option>
+        <option value="软件">软件与信息服务</option>
+        <option value="跨境">跨境电商</option>
+        <option value="传统">传统优势产业（服装/家具/珠宝/钟表等）</option>
+        <option value="其他">其他行业</option>
+      </select></div>
+      <div class="field"><label>企业规模</label><select id="scale">
+        <option value="规上">规上工业企业 / 限上企业</option>
+        <option value="中小">中小企业（非规上）</option>
+        <option value="初创">初创企业（成立&lt;3年）</option>
+      </select></div>
+      <div class="row">
+        <div class="field"><label>国家高新企业</label><select id="hightech"><option value="否">否</option><option value="是">是</option></select></div>
+        <div class="field"><label>专精特新层级</label><select id="zxzz">
+          <option value="无">无</option><option value="创新型">创新型中小企业</option>
+          <option value="省级">省级专精特新</option><option value="小巨人">国家级小巨人</option>
+        </select></div>
+      </div>
+      <div class="field"><label>上年营业收入（万元）</label><input id="revenue" type="number" min="0" placeholder="例如 2000"><div class="hint">用于判断企业规模与门槛</div></div>
+      <div class="row">
+        <div class="field"><label>员工人数</label><input id="emp" type="number" min="0" placeholder="例如 50"></div>
+        <div class="field"><label>年度研发投入（万元）</label><input id="rnd" type="number" min="0" placeholder="例如 300"></div>
+      </div>
+      <div class="field"><label>技改 / 设备投资（万元）</label><input id="tech" type="number" min="0" placeholder="例如 500"><div class="hint">技改补贴的核算基数</div></div>
+      <div class="field"><label>数字化改造投入（万元）</label><input id="digi" type="number" min="0" placeholder="例如 60"><div class="hint">MES/云化软件/工业互联网等投入</div></div>
+      <button class="btn" id="matchBtn">开始匹配补贴</button>
+    </div>
+    <div class="panel" id="resultPanel">
+      <h2>匹配结果</h2>
+      <div class="empty" id="emptyState"><div class="icon">🔍</div>填写左侧企业画像，点击「开始匹配补贴」查看你能申报的政策与预估金额</div>
+      <div class="summary" id="summary" style="display:none">
+        <div class="big" id="sumAmt">¥0</div>
+        <div class="sub" id="sumSub"></div>
+      </div>
+      <div class="share" id="share">
+        <b>✅ 已生成专属诊断书</b>
+        <div class="hint">分享链接（企业可自行查看 / 你后续跟进）：</div>
+        <code id="shareUrl"></code>
+        <div class="row">
+          <button class="btn sec" id="viewBtn">查看诊断书</button>
+          <button class="btn ghost" id="pdfBtn">打印 / 存为 PDF</button>
+        </div>
+      </div>
+      <div id="cards"></div>
+      <div class="disclaimer">
+        说明：本工具政策库基于深圳市及各区公开申报指南的结构化整理（市级 + 10 区），匹配与金额测算为简化模型，<b>不构成申报承诺</b>。真实申报须以官方最新指南、专项审计与专家评审结果为准；<b>企业画像仅在你的浏览器本地计算，不会上传到任何服务器</b>。虚假材料将列入失信名单并追责。
+      </div>
+    </div>
+  </div>
+</div>
+<div class="wrap" id="reportView" style="display:none">
+  <div class="toolbar" id="toolbar" style="display:none"><button class="btn" onclick="window.print()">打印 / 存为 PDF</button><a href="#" onclick="location.hash='';return false;">← 返回自测</a></div>
+  <div id="content"></div>
+  <footer>深圳补贴匹配自测工具 · 本报告由系统依据公开政策自动测算，数据仅在本地浏览器生成 · © 2026</footer>
+</div>
+<script>const POLICIES = [
+  {
+    "id": "sz-digi",
+    "name": "市级中小企业数字化改造专项",
+    "category": "数字化",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件",
+      "跨境"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.5,
+      "cap": 40
+    },
+    "summary": "对符合条件的中小企业数字化改造项目按不超过实际投入50%扶持，单企业最高40万元。须纳入试点名录、选择公示服务商改造并达数字化二级。",
+    "source": "2025年深圳市中小企业数字化转型城市试点专项支持项目",
+    "estimated": false,
+    "deadline": "年度批次申报",
+    "sourceUrl": "https://zxqyj.sz.gov.cn/gkmlpt/content/11/11812/post_11812387.html"
+  },
+  {
+    "id": "sz-trad",
+    "name": "传统优势产业数字化转型",
+    "category": "数字化",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "传统"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.2,
+      "cap": 500
+    },
+    "summary": "支持服装、家具、黄金珠宝、钟表、皮革、内衣、眼镜、工艺美术、化妆品等传统优势产业企业数字化改造，按不超过审定费用20%资助，单项目最高500万元。",
+    "source": "2026年企业技术改造扶持计划传统优势产业数字化转型项目",
+    "estimated": false,
+    "deadline": "年度申报（2026.2-3受理）",
+    "sourceUrl": "https://gxj.sz.gov.cn/xxgk/xxgkml/qt/tzgg/content/post_12639372.html"
+  },
+  {
+    "id": "sz-rnd",
+    "name": "深圳市企业研发资助",
+    "category": "研发",
+    "scope": {
+      "type": "citywide"
+    },
+    "requireScaleOrHightech": true,
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.1,
+      "cap": 300
+    },
+    "summary": "对建立研发台账、有实际研发投入的规上企业或国家高新技术企业，按研发费用一定比例给予资助（模型按10%、封顶300万测算）。",
+    "source": "深圳市企业研究开发资助政策（模型简化）",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.sz.gov.cn/zfgb/2026/gb1405/content/post_12679122.html"
+  },
+  {
+    "id": "sz-hightech",
+    "name": "国家高新技术企业认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "citywide"
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 20
+    },
+    "summary": "首次认定国家高新技术企业，各区通常给予10-30万元一次性奖励（模型取中间值20万）。需满足知识产权、研发费用占比、高新收入占比等条件。",
+    "source": "深圳市及各区高企认定奖励政策（综合）",
+    "estimated": true,
+    "deadline": "常年申报（批次制）",
+    "sourceUrl": "https://www.sz.gov.cn/gkmlpt/content/9/9685/mpost_9685976.html"
+  },
+  {
+    "id": "sz-zxzz",
+    "name": "市级专精特新奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "citywide"
+    },
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "省级": 10,
+        "小巨人": 50
+      },
+      "tierHint": "建议申报省级专精特新（市级奖励10万）"
+    },
+    "summary": "市级财政对首次获评省级专精特新奖励10万元、国家级小巨人奖励50万元（区级通常另有叠加）。",
+    "source": "深圳市专精特新企业奖励政策（市级部分）",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.sz.gov.cn/gkmlpt/content/9/9685/mpost_9685976.html"
+  },
+  {
+    "id": "sz-ipright",
+    "name": "市级知识产权专项（专利/软著补贴）",
+    "category": "知识产权",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件",
+      "跨境"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 5
+    },
+    "summary": "对国内发明专利授权、PCT专利申请、计算机软件著作权登记等给予每件数千至数万元不等的资助（模型取均值5万/年测算）。具体以市市场监管局年度指南为准。",
+    "source": "深圳市知识产权专项资金管理办法",
+    "estimated": true,
+    "deadline": "常年受理/年度申报",
+    "sourceUrl": "https://amr.sz.gov.cn/xxgk/qt/tzgg/content/post_11127455.html"
+  },
+  {
+    "id": "sz-talent",
+    "name": "市级人才安居/租房补贴（高层次人才）",
+    "category": "人才",
+    "scope": {
+      "type": "citywide"
+    },
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "深圳市对认定的杰出人才、领军人才、青年拔尖人才等提供购房补贴（最高600万）、租房补贴（最高4800元/月）或人才安居房。企业可为其符合条件员工申请。",
+    "source": "深圳市人才安居办法及相关补贴政策",
+    "estimated": true,
+    "deadline": "常年申报",
+    "sourceUrl": "https://www.sz.gov.cn/attachment/1/1440/1440595/9453719.pdf"
+  },
+  {
+    "id": "sz-ecomm",
+    "name": "市级跨境电商扶持（独立站/品牌出海）",
+    "category": "跨境电商",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "跨境",
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "minDigiInvest": 10,
+    "amount": {
+      "mode": "tiered",
+      "base": "revenue",
+      "steps": [
+        {
+          "upto": 5000,
+          "rate": 0.001
+        },
+        {
+          "upto": 20000,
+          "rate": 0.002
+        },
+        {
+          "upto": null,
+          "rate": 0.003
+        }
+      ],
+      "cap": 200
+    },
+    "summary": "对跨境电商独立站运营、海外仓建设、国际物流费用、品牌推广等给予支持。不同项目类型资助比例和上限不同（模型按营收阶梯0.1%-0.3%测算，封顶200万）。",
+    "source": "深圳市商务局促进电子商务高质量发展若干措施",
+    "estimated": true,
+    "deadline": "年度批次申报",
+    "sourceUrl": "https://commerce.sz.gov.cn/gkmlpt/content/11/11957/post_11957365.html"
+  },
+  {
+    "id": "ft-zxzz",
+    "name": "福田区专精特新认定支持",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "needZxzz": [
+      "省级",
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "省级": 100,
+        "小巨人": 300
+      },
+      "tierHint": "建议申报省级专精特新"
+    },
+    "summary": "福田区对入选专精特新名单的企业依条件给予支持：省级最高100万、小巨人最高300万。",
+    "source": "福田区支持都市型先进制造业高质量发展若干措施",
+    "estimated": false,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szft.gov.cn/ftqkjj/gkmlpt/content/12/12580/post_12580672.html"
+  },
+  {
+    "id": "ft-tech",
+    "name": "福田区工业投资技改支持",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minTechInvest": 50,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.1,
+      "cap": 3000
+    },
+    "summary": "福田区对企业实施的工业投资技改项目，按实际投资金额依条件给予最高3000万元支持（模型按10%测算）。",
+    "source": "福田区支持都市型先进制造业高质量发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szft.gov.cn/ftqkjj/gkmlpt/content/12/12580/post_12580672.html"
+  },
+  {
+    "id": "ft-innov",
+    "name": "福田区制造业创新中心支持",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "福田区对首次获认定的国家/省/市级制造业创新中心，依条件给予最高3000万元支持（具体以指南为准）。",
+    "source": "福田区支持都市型先进制造业高质量发展若干措施",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szft.gov.cn/ftqkjj/gkmlpt/content/12/12580/post_12580672.html"
+  },
+  {
+    "id": "ft-rnd",
+    "name": "福田区研发投入支持",
+    "category": "研发",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "requireScaleOrHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.05,
+      "cap": 100
+    },
+    "summary": "福田区对规上企业或高企的研发投入按一定比例给予配套支持（模型按5%、封顶100万测算）。与市级研发资助可叠加。",
+    "source": "福田区科技创新发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szft.gov.cn/ftqkjj/gkmlpt/content/12/12580/post_12580672.html"
+  },
+  {
+    "id": "ft-rent",
+    "name": "福田区科技创新园区房租补贴",
+    "category": "房租",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "软件",
+      "制造"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 30
+    },
+    "summary": "入驻福田区认定科技创新园区的国高/专精特新/中小科技企业，可享受房租减免或补贴（模型取年均30万测算）。具体以园区政策为准。",
+    "source": "福田区科技创新园区管理办法",
+    "estimated": true,
+    "deadline": "常年申报",
+    "sourceUrl": "https://sf.sz.gov.cn/gfxwjcx/qjgfxwj/ftq/qzfbmgfxwj/qzbm/qkjhgyxxhj/content/post_10644933.html"
+  },
+  {
+    "id": "lg-tech",
+    "name": "龙岗区工业企业技术改造扶持",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minTechInvest": 100,
+    "amount": {
+      "mode": "tiered",
+      "base": "tech",
+      "steps": [
+        {
+          "upto": 2000,
+          "rate": 0.1
+        },
+        {
+          "upto": 10000,
+          "rate": 0.08
+        },
+        {
+          "upto": null,
+          "rate": 0.05
+        }
+      ],
+      "cap": 2000
+    },
+    "summary": "龙岗制造业/科技企业年度技改投资分档资助：100-2000万部分10%；2000-1亿超出部分8%；1亿以上超出部分5%。单企业年最高2000万。",
+    "source": "龙岗区工业和信息化产业发展专项资金实施细则（2025.12施行）",
+    "estimated": false,
+    "deadline": "年度申报（2026.1-3受理）",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12552482.html"
+  },
+  {
+    "id": "lg-rnd",
+    "name": "龙岗区企业研发投入补贴",
+    "category": "研发",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "requireScaleOrHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "minRnd": 100,
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.08,
+      "cap": 200
+    },
+    "summary": "龙岗区对规上企业或高企的研发投入按比例给予支持（模型按8%、封顶200万测算）。与市级研发资助可叠加。",
+    "source": "龙岗区工业和信息化产业发展专项资金实施细则",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12552482.html"
+  },
+  {
+    "id": "lg-zxzz",
+    "name": "龙岗区专精特新/单项冠军奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "小巨人": 100
+      },
+      "tierHint": "建议申报国家级小巨人（龙岗区奖100万；重点小巨人/单项冠军最高200万）"
+    },
+    "summary": "龙岗区对获评专精特新小巨人给予最高100万；重点小巨人最高200万；国家级制造业单项冠军最高200万。",
+    "source": "龙岗区企业培育专项扶持细则",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12645660.html"
+  },
+  {
+    "id": "lg-digi",
+    "name": "龙岗区数字化转型场景补贴",
+    "category": "数字化",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minDigiInvest": 20,
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.5,
+      "cap": 20
+    },
+    "summary": "龙岗区对制造业/科技企业运用工业互联网/AI/云化MES等数字化转型项目，按实际投入50%补贴，单企业最高20万元。",
+    "source": "龙岗区工业和信息化产业发展专项资金实施细则",
+    "estimated": false,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12552482.html"
+  },
+  {
+    "id": "lg-hightech",
+    "name": "龙岗区高新技术企业认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "triggerNotHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 15
+    },
+    "summary": "龙岗区对首次认定或迁入的国家高新技术企业给予一次性奖励（模型取15万，以官方最新为准）。",
+    "source": "龙岗区科技创新专项资金管理办法",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12552482.html"
+  },
+  {
+    "id": "lg-rent",
+    "name": "龙岗区创新产业园租金补贴",
+    "category": "房租",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 20
+    },
+    "summary": "入驻龙岗区认定创新产业园的国高/专精特新/科技型中小企业，可享受租金优惠或补贴（模型取年均20万测算）。具体以园区及区科创政策为准。",
+    "source": "龙岗区科技创新暨创新型产业用房管理暂行办法",
+    "estimated": true,
+    "deadline": "常年申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/zfgb/2023/gb33/content/post_12626895.html"
+  },
+  {
+    "id": "lg-ipright",
+    "name": "龙岗区知识产权优势企业奖励",
+    "category": "知识产权",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 10
+    },
+    "summary": "龙岗区对知识产权优势示范企业、专利奖获奖单位等给予10-50万不等奖励（模型取10万测算）。",
+    "source": "龙岗区知识产权专项资金实施细则",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.lg.gov.cn/gab/tzgg/content/post_12599947.html"
+  },
+  {
+    "id": "ns-tech",
+    "name": "南山区技改券",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minTechInvest": 50,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.01,
+      "cap": 1000
+    },
+    "summary": "南山区对符合条件的企业工业技改或设备购置项目，按不超过经审定投资额的1%补贴，每家企业每年最高1000万元。",
+    "source": "南山区支持产业发展六个券行动方案",
+    "estimated": false,
+    "deadline": "2026.2.9-3.6受理",
+    "sourceUrl": "https://www.szns.gov.cn/ztzl/slh/zcfg/content/post_12515370.html"
+  },
+  {
+    "id": "ns-model",
+    "name": "南山区模型券（AI投入补贴）",
+    "category": "数字化",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "软件",
+      "制造"
+    ],
+    "minDigiInvest": 10,
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.5,
+      "cap": 100
+    },
+    "summary": "南山区企业通过云服务商搭建大模型应用/AI智能体/AI硬件，按不超过上季度实际投入50%补贴，单家每季度最高100万元。",
+    "source": "南山区支持产业发展六个券行动方案",
+    "estimated": false,
+    "deadline": "季度申报",
+    "sourceUrl": "https://www.szns.gov.cn/ztzl/slh/zcfg/content/post_12515370.html"
+  },
+  {
+    "id": "ns-zxzz",
+    "name": "南山区小巨人认定奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 100
+    },
+    "summary": "注册地或迁入南山区的国家级小巨人企业，一次性奖励100万元。",
+    "source": "2026年深圳市及各区专精特新补贴政策汇总",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szns.gov.cn/ztzl/slh/zcfg/content/post_12515370.html"
+  },
+  {
+    "id": "ns-zxzz-digi",
+    "name": "南山区小巨人数字化转型补贴",
+    "category": "数字化",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.5,
+      "cap": 200
+    },
+    "summary": "南山区小巨人企业数字化转型投入补贴比例最高50%，每年最高200万元。",
+    "source": "2026年深圳市及各区专精特新补贴政策汇总",
+    "estimated": false,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szns.gov.cn/ztzl/slh/zcfg/content/post_12515370.html"
+  },
+  {
+    "id": "ns-rnd",
+    "name": "南山区研发投入支持",
+    "category": "研发",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "requireScaleOrHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "软件",
+      "制造"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.05,
+      "cap": 150
+    },
+    "summary": "南山区对规上企业或高企的研发投入给予配套支持（模型按5%、封顶150万测算），与市级可叠加。",
+    "source": "南山区促进产业科技创新若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szns.gov.cn/attachment/1/1284/1284678/10535180.docx"
+  },
+  {
+    "id": "ns-hightech",
+    "name": "南山区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 30
+    },
+    "summary": "南山区对首次认定国家高新技术企业给予一次性奖励（模型取30万，以官方最新为准）。",
+    "source": "南山区科技创新政策",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szns.gov.cn/attachment/1/1284/1284678/10535180.docx"
+  },
+  {
+    "id": "ba-renovate",
+    "name": "宝安区重点企业综合改造补贴",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "requireScale": [
+      "规上"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "宝安区鼓励上市/国家级单项冠军/国家级小巨人/年产值5亿+工业企业长租生产研发用房并综合改造，给予补贴（比例以指南为准，需5年以上租约+备案）。",
+    "source": "宝安区重点企业综合改造补贴项目申报通知（2025.12）",
+    "estimated": true,
+    "deadline": "2025.12.29-2026.2.28受理",
+    "sourceUrl": "https://www.baoan.gov.cn/jjcj/zwgk/qt/tzgg/content/post_12576256.html"
+  },
+  {
+    "id": "ba-zxzz",
+    "name": "宝安区专精特新奖励（含市区叠加）",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "省级": 20,
+        "小巨人": 168
+      },
+      "tierHint": "建议申报省级专精特新（宝安区奖20万）"
+    },
+    "summary": "宝安区对省级专精特新奖励20万、国家级小巨人市区合计168万（市级50+区级118）。",
+    "source": "宝安区关于支持专精特新企业高质量发展的若干措施",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.baoan.gov.cn/baqfzx/gkmlpt/content/11/11935/mpost_11935867.html"
+  },
+  {
+    "id": "ba-zxzz-loan",
+    "name": "宝安区小巨人贷款贴息",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 200
+    },
+    "summary": "宝安区对国家级小巨人企业，按实际支付利息/担保/保证保险费用的70%、合计不超融资金额3.5%、每年最高200万元资助。",
+    "source": "深圳宝安区专精特新奖补政策解读",
+    "estimated": false,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.baoan.gov.cn/baqfzx/gkmlpt/content/11/11854/post_11854036.html"
+  },
+  {
+    "id": "ba-tech",
+    "name": "宝安区技术改造补贴",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "minTechInvest": 100,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.08,
+      "cap": 1000
+    },
+    "summary": "宝安区对企业技术改造项目按投资额一定比例给予补贴（模型按8%、封顶1000万测算）。",
+    "source": "宝安区技术改造补贴项目申报指南",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.baoan.gov.cn/jjcj/zwgk/qt/tzgg/content/post_12262220.html"
+  },
+  {
+    "id": "ba-hightech",
+    "name": "宝安区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 20
+    },
+    "summary": "宝安区对首次认定国家高新技术企业给予一次性奖励（模型取20万，以官方最新为准）。",
+    "source": "宝安区科技创新政策",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.baoan.gov.cn/bakj/gkmlpt/content/8/8409/post_8409472.html"
+  },
+  {
+    "id": "lh-zxzz",
+    "name": "龙华区专精特新奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙华"
+      ]
+    },
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "省级": 20,
+        "小巨人": 100,
+        "重点小巨人": 200
+      },
+      "tierHint": "建议申报省级专精特新（龙华区奖20万）"
+    },
+    "summary": "龙华区对市级专精特新一次性20万、小巨人100万、重点小巨人最高200万；另有国家/省/市1:1配套。",
+    "source": "2026年深圳市及各区专精特新补贴政策汇总",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szlhq.gov.cn/bmxxgk/jjcjj/zcfg_124209/zcwj_125469/content/post_11511931.html"
+  },
+  {
+    "id": "lh-tech",
+    "name": "龙华区工业技改支持",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙华"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "minTechInvest": 100,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.1,
+      "cap": 4000
+    },
+    "summary": "龙华区支持工业企业加大技改投入、推动大规模设备更新，对符合条件的技改项目给予资金支持（模型按投资额10%、封顶4000万测算）。",
+    "source": "龙华区关于新形势下鼓励企业加大工业投资力度推动大规模设备更新的若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szlhq.gov.cn/lhjjcjj/gkmlpt/content/11/11561/post_11561794.html"
+  },
+  {
+    "id": "lh-hightech2",
+    "name": "龙华区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙华"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 20
+    },
+    "summary": "龙华区对首次认定国家高新技术企业给予一次性奖励（模型取20万，以官方最新为准）。",
+    "source": "龙华区科技创新专项资金实施细则",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szlh.gov.cn/lhqyfwzx/gkmlpt/content/11/11848/post_11848253.html"
+  },
+  {
+    "id": "lh-digi",
+    "name": "龙华区数字化转型支持",
+    "category": "数字化",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙华"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minDigiInvest": 30,
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.3,
+      "cap": 50
+    },
+    "summary": "龙华区对企业上云、工业互联网应用、智能制造改造等项目按投入30%给予支持（模型测算，封顶50万）。",
+    "source": "龙华区数字化转型若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://sf.sz.gov.cn/gfxwjcx/qjgfxwj/lh/qzfgfxwj/qzfbgs/content/post_11220449.html"
+  },
+  {
+    "id": "gm-tech",
+    "name": "光明区技术改造奖励",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "光明"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "minTechInvest": 100,
+    "amount": {
+      "mode": "tiered",
+      "base": "tech",
+      "steps": [
+        {
+          "upto": 10000,
+          "rate": 0.15
+        },
+        {
+          "upto": null,
+          "rate": 0.05
+        }
+      ],
+      "cap": 4000
+    },
+    "summary": "光明区对企业上年度技改项目，年度建设费用1亿及以下部分按15%奖励（年最高1000万）；超出1亿部分按5%（最高3000万）。单家年最高4000万。",
+    "source": "光明区关于推动制造业高质量发展的若干措施（2026.5施行）",
+    "estimated": false,
+    "deadline": "年度申报（有效期至2028.12）",
+    "sourceUrl": "https://www.szgm.gov.cn/xxgk/xqgwhxxgkml/zcfg_116521/qbmgfxwj/content/post_12765979.html"
+  },
+  {
+    "id": "gm-hightech",
+    "name": "光明区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "光明"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 5
+    },
+    "summary": "光明区对首次通过国家高新技术企业认定的，给予一次性最高5万元奖励。",
+    "source": "光明区关于推动制造业高质量发展的若干措施",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szgm.gov.cn/xxgk/xqgwhxxgkml/zcfg_116521/qbmgfxwj/content/post_12765979.html"
+  },
+  {
+    "id": "gm-zxzz",
+    "name": "光明区小巨人/单项冠军奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "光明"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "小巨人": 100
+      },
+      "tierHint": "建议申报国家级小巨人（光明区奖100万；单项冠军200万）"
+    },
+    "summary": "光明区对获评小巨人一次性最高100万、国家级制造业单项冠军最高200万。",
+    "source": "光明区关于推动制造业高质量发展的若干措施",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szgm.gov.cn/xxgk/xqgwhxxgkml/zcfg_116521/qbmgfxwj/content/post_12765979.html"
+  },
+  {
+    "id": "gm-rnd",
+    "name": "光明区研发投入支持",
+    "category": "研发",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "光明"
+      ]
+    },
+    "requireScaleOrHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.1,
+      "cap": 200
+    },
+    "summary": "光明区对规上企业或高企研发投入按10%给予支持（封顶200万），与市级可叠加。",
+    "source": "光明区科技创新扶持",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szgm.gov.cn/szgm/132104/kjcx/252751/content/post_11127293.html"
+  },
+  {
+    "id": "ps-newenergy",
+    "name": "坪山区新能源产业固投奖励",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "坪山"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "minTechInvest": 2000,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.02,
+      "cap": 200
+    },
+    "summary": "坪山区对新能源产业前沿/紧缺/关键领域、无自有产业用地、首年固投2000万+的企业，按实际固投2%给予最高200万一次性资助。",
+    "source": "坪山区落实双碳战略推动新能源产业高质量发展若干措施",
+    "estimated": false,
+    "deadline": "年度申报（有效期3年）",
+    "sourceUrl": "https://www.szpsq.gov.cn/gkmlpt/content/12/12264/mpost_12264577.html"
+  },
+  {
+    "id": "ps-biomed",
+    "name": "坪山区生物医药产业专项",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "坪山"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "坪山区对生物医药企业的新药/医疗器械注册、临床试验、GMP厂房建设等给予支持（最高可达数百万）。具体以区生物产业政策为准。",
+    "source": "坪山区生物医药产业创新发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szpsq.gov.cn/gkmlpt/content/12/12203/post_12203973.html"
+  },
+  {
+    "id": "ps-hightech",
+    "name": "坪山区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "坪山"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 30
+    },
+    "summary": "坪山区对首次认定国家高新技术企业给予一次性奖励（模型取30万，以官方最新为准）。",
+    "source": "坪山区科技创新专项资金实施细则",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szpsq.gov.cn/ghb/gfxwj/content/post_9282403.html"
+  },
+  {
+    "id": "yt-hightech",
+    "name": "盐田区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "盐田"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 10
+    },
+    "summary": "盐田区对首次认定国家高新技术企业给予一次性奖励（模型取10万，以官方最新为准）。",
+    "source": "盐田区科技创新政策（通用惯例）",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.yantian.gov.cn/yttztghqyfwzx/attachment/1/1453/1453813/11348840.docx"
+  },
+  {
+    "id": "yt-logistics",
+    "name": "盐田区物流/航运产业补贴",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "盐田"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "跨境",
+      "其他"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "盐田区对港口物流、冷链物流、航运服务等企业给予航线/仓储/信息化建设补贴。具体以区现代物流业政策为准。",
+    "source": "盐田区现代物流业发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.yantian.gov.cn/gkmlpt/content/5/5736/post_5736302.html"
+  },
+  {
+    "id": "dp-lowalt",
+    "name": "大鹏新区低空经济奖励",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "大鹏"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "其他"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "大鹏新区对低空经济研发/制造/销售/运营企业，按营收或产值首次达规模阶梯给予奖励（如制造类产值首达1亿奖100万）。具体以指南为准。",
+    "source": "大鹏新区促进低空经济产业高质量发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.dpxq.gov.cn/ztzl/tzdp/tzfw/yhzc/content/post_12203044.html"
+  },
+  {
+    "id": "dp-tourism",
+    "name": "大鹏新区文旅/生物产业补贴",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "大鹏"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "其他"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "大鹏新区对生物医药、生命健康、文旅融合等领域企业提供落户/研发/场地支持。具体以区产业政策为准。",
+    "source": "大鹏新区产业发展相关政策",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.dpxq.gov.cn/xxgk/xxgk/zcfg/wj/xqgfxwj/xqzhb/content/post_12927276.html"
+  },
+  {
+    "id": "lh-hightech",
+    "name": "罗湖区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "罗湖"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 10
+    },
+    "summary": "罗湖区对首次认定国家高新技术企业给予一次性奖励（模型取10万，以官方最新为准）。",
+    "source": "罗湖区科技创新政策（通用惯例）",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szlh.gov.cn/lhqyfwzx/gkmlpt/content/11/11848/post_11848253.html"
+  },
+  {
+    "id": "lh-service",
+    "name": "罗湖区专业服务业/总部经济支持",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "罗湖"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "软件",
+      "其他"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "罗湖区对专业服务业（律所/会计/咨询/设计等）、总部企业给予落户/办公用房/经营增长等奖励。具体以区总部经济及专业服务政策为准。",
+    "source": "罗湖区总部经济及专业服务业发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szlh.gov.cn/qgbmxxgkml/qqyfwzx/fdzdgknr/zcwj/content/post_11848219.html"
+  },
+  {
+    "id": "sz-green",
+    "name": "市级绿色制造/节能降碳补贴",
+    "category": "其他",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "深圳市对绿色工厂、绿色供应链、工业节能降碳改造项目给予支持（最高数百万元）。具体以市工信局年度绿色制造试点示范申报指南为准。",
+    "source": "深圳市工业和信息化局绿色发展相关项目",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://gxj.sz.gov.cn/xxgk/xxgkml/qt/tzgg/content/post_12698135.html"
+  }
+]
+;</script>
+<script>// 浏览器端补贴匹配引擎（与 server.js / src/policies.js 行为一致，纯前端运行）
+// 暴露为全局 window.SubsidyEngine，不依赖任何后端。
+(function (global) {
+  'use strict';
+
+  // 计算金额
+  function calcAmount(p, f) {
+    const a = p.amount;
+    if (!a) return 0;
+    if (a.mode === 'fixed') return a.value || 0;
+    if (a.mode === 'percent') {
+      const base = Number(f[a.base]) || 0;
+      return Math.min(base * a.rate, a.cap || Infinity);
+    }
+    if (a.mode === 'tiered') {
+      const base = Number(f[a.base]) || 0;
+      let amt = 0, prev = 0;
+      for (const s of a.steps) {
+        const upto = s.upto == null ? Infinity : s.upto;
+        const seg = Math.min(base, upto) - prev;
+        if (seg > 0) amt += seg * s.rate;
+        prev = upto;
+        if (base <= upto) break;
+      }
+      return a.cap ? Math.min(amt, a.cap) : amt;
+    }
+    if (a.mode === 'byTier') {
+      return a.byTier[f[a.tierField || 'zxzz']] || 0;
+    }
+    return 0;
+  }
+
+  // 单条政策评估
+  function evaluate(p, f) {
+    // 区域范围
+    if (p.scope && p.scope.type === 'district' && p.scope.districts && !p.scope.districts.includes(f.district)) {
+      return { status: 'no', gaps: ['仅适用于 ' + (p.scope.districts || []).join('/')], amount: 0 };
+    }
+    // 行业
+    if (p.applicableIndustries && p.applicableIndustries.length &&
+        !p.applicableIndustries.includes(f.industry)) {
+      return { status: 'no', gaps: ['行业不适用'], amount: 0 };
+    }
+    // 高企
+    if (p.triggerNotHightech && f.hightech === '是') {
+      return { status: 'no', gaps: [], amount: 0 };
+    }
+    if (p.needHightech && f.hightech !== '是') {
+      return { status: 'no', gaps: ['需为国家高新技术企业'], amount: 0 };
+    }
+    // 专精特新层级
+    if (p.needZxzz && p.needZxzz.length && !p.needZxzz.includes(f.zxzz)) {
+      return { status: 'no', gaps: ['需为 ' + p.needZxzz.join('/') + ' 企业'], amount: 0 };
+    }
+    // 规模
+    if (p.requireScale && p.requireScale.length && !p.requireScale.includes(f.scale)) {
+      return { status: 'no', gaps: ['需为 ' + p.requireScale.join('/') + ' 企业'], amount: 0 };
+    }
+    // requireScaleOrHightech：规上 或 高企 满其一即可（缺 requireScale 时默认接受"规上"/"中小"）
+    if (p.requireScaleOrHightech) {
+      const scaleOk = (p.requireScale && p.requireScale.length)
+        ? p.requireScale.includes(f.scale)
+        : (f.scale === '规上' || f.scale === '中小');
+      const hightechOk = f.hightech === '是';
+      if (!scaleOk && !hightechOk) {
+        return { status: 'no', gaps: ['需为规上企业或国家高新技术企业'], amount: 0 };
+      }
+    }
+    // 投资/研发门槛（软缺口，可补）
+    const gaps = [];
+    if (p.minTechInvest && (Number(f.tech) || 0) < p.minTechInvest)
+      gaps.push('技改/设备投资需 ≥ ' + p.minTechInvest + ' 万元');
+    if (p.minDigiInvest && (Number(f.digi) || 0) < p.minDigiInvest)
+      gaps.push('数字化投入需 ≥ ' + p.minDigiInvest + ' 万元');
+    if (p.minRnd && (Number(f.rnd) || 0) < p.minRnd)
+      gaps.push('研发投入需 ≥ ' + p.minRnd + ' 万元');
+    // byTier 特殊：未达层级
+    if (p.amount && p.amount.mode === 'byTier') {
+      if (!p.amount.byTier[f[p.amount.tierField || 'zxzz']]) {
+        if (f[p.amount.tierField || 'zxzz'] === '无')
+          return { status: 'gap', gaps: [p.amount.tierHint || '建议申报对应层级'], amount: 0 };
+        return { status: 'no', gaps: [], amount: 0 };
+      }
+    }
+    if (gaps.length) return { status: 'gap', gaps, amount: 0 };
+    return { status: 'ok', gaps: [], amount: calcAmount(p, f) };
+  }
+
+  // 全部匹配，并统一返回结构（含区域字符串、scope 对象，便于前端渲染复用）
+  function matchAll(policies, f) {
+    return (policies || []).map(function (p) {
+      const r = evaluate(p, f);
+      const scope = p.scope || { type: 'citywide' };
+      return {
+        id: p.id,
+        name: p.name,
+        category: p.category || '',
+        scope: scope,
+        summary: p.summary || '',
+        source: p.source || '',
+        sourceUrl: p.sourceUrl || '',
+        estimated: !!p.estimated,
+        district: scope.type === 'citywide' ? '全市' : (scope.districts || []).join('/'),
+        status: r.status,
+        gaps: r.gaps,
+        amount: r.amount || 0
+      };
+    });
+  }
+
+  global.SubsidyEngine = { evaluate: evaluate, matchAll: matchAll, calcAmount: calcAmount };
+
+  // 画像 <-> URL 安全编码
+  function b64encode(str) {
+    const b = btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (_, h) {
+      return String.fromCharCode('0x' + h);
+    }));
+    return b.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+  function b64decode(s) {
+    let t = String(s).replace(/-/g, '+').replace(/_/g, '/');
+    while (t.length % 4) t += '=';
+    return decodeURIComponent(Array.prototype.map.call(atob(t), function (c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  }
+  global.SubsidyCodec = {
+    encodeProfile: function (profile) { return b64encode(JSON.stringify(profile)); },
+    decodeProfile: function (code) { return JSON.parse(b64decode(code)); }
+  };
+})(window);
+</script>
+<script>// 单文件版 UI 逻辑：工具视图（自测）+ 报告视图（hash 切换），均使用内联 POLICIES 与 engine
+(function () {
+  'use strict';
+  const $ = id => document.getElementById(id);
+
+  function readForm() {
+    return {
+      district: $('district').value,
+      industry: $('industry').value,
+      scale: $('scale').value,
+      hightech: $('hightech').value,
+      zxzz: $('zxzz').value,
+      revenue: Number($('revenue').value) || 0,
+      emp: Number($('emp').value) || 0,
+      rnd: Number($('rnd').value) || 0,
+      tech: Number($('tech').value) || 0,
+      digi: Number($('digi').value) || 0
+    };
+  }
+
+  function renderTool(data, profile) {
+    $('emptyState').style.display = 'none';
+    $('summary').style.display = 'block';
+    $('sumAmt').textContent = '¥' + data.total.toLocaleString() + ' 万';
+    $('sumSub').textContent = `共匹配 ${data.okCount} 项可直接申报、${data.gapCount} 项需补条件（按封顶值测算，实际以审定为准）`;
+    const cards = $('cards');
+    cards.innerHTML = '';
+    const order = { ok: 0, gap: 1, no: 2 };
+    const sorted = [...data.results].sort((a, b) => order[a.status] - order[b.status]);
+    sorted.forEach(r => {
+      if (r.status === 'no') return;
+      const card = document.createElement('div');
+      card.className = `card ${r.status}`;
+      const tagText = r.status === 'ok' ? '完全符合' : '需补条件';
+      const amt = r.status === 'ok' ? `预估 ${r.amount} 万元` : '—';
+      card.innerHTML = `
+        <div class="head"><div class="name">${r.name}</div><div class="tag ${r.status}">${tagText}</div></div>
+        <div class="amt">${amt}</div>
+        <div class="desc">${r.summary}</div>
+        ${r.estimated ? '<div class="est">⚠️ 估算值，以官方最新指南为准</div>' : ''}
+        ${r.gaps && r.gaps.length ? `<div class="gap">待补：${r.gaps.join('；')}</div>` : ''}
+        <div class="src">来源：${r.sourceUrl ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source}</a>` : r.source}　|　适用区域：${r.district}${r.sourceUrl ? `　|　<a href="${r.sourceUrl}" target="_blank" rel="noopener" style="color:#c8102e">政策原文 ›</a>` : ''}</div>`;
+      cards.appendChild(card);
+    });
+    const code = window.SubsidyCodec.encodeProfile(profile);
+    const base = location.href.split('#')[0];
+    const shareUrl = `${base}#p=${code}`;
+    $('share').classList.add('show');
+    $('shareUrl').textContent = shareUrl;
+    $('viewBtn').onclick = () => window.open(shareUrl, '_blank');
+    $('pdfBtn').onclick = () => window.open(`${shareUrl}&print=1`, '_blank');
+  }
+
+  async function doMatch() {
+    const btn = $('matchBtn');
+    btn.disabled = true; btn.textContent = '匹配中…';
+    try {
+      const profile = readForm();
+      const results = window.SubsidyEngine.matchAll(POLICIES, profile);
+      const total = results.filter(r => r.status === 'ok').reduce((s, r) => s + (r.amount || 0), 0);
+      const okCount = results.filter(r => r.status === 'ok').length;
+      const gapCount = results.filter(r => r.status === 'gap').length;
+      renderTool({ total, okCount, gapCount, results }, profile);
+    } catch (e) {
+      alert('匹配失败：' + e.message);
+    } finally {
+      btn.disabled = false; btn.textContent = '开始匹配补贴';
+    }
+  }
+
+  function renderReport() {
+    const hash = location.hash.startsWith('#') ? location.hash.slice(1) : location.hash;
+    const params = new URLSearchParams(hash);
+    const autoPrint = params.get('print') === '1';
+    const pB64 = params.get('p');
+    const content = $('content');
+    if (!pB64) {
+      content.innerHTML = '<div class="err"><div style="font-size:40px;opacity:.3">📭</div>缺少诊断参数（链接不完整）</div>';
+      return;
+    }
+    let profile;
+    try {
+      profile = window.SubsidyCodec.decodeProfile(pB64);
+    } catch (e) {
+      content.innerHTML = '<div class="err"><div style="font-size:40px;opacity:.3">📭</div>诊断参数解析失败，请重新生成分享链接</div>';
+      return;
+    }
+    const results = window.SubsidyEngine.matchAll(POLICIES, profile);
+    const total = results.filter(r => r.status === 'ok').reduce((s, r) => s + (r.amount || 0), 0);
+    const ok = results.filter(r => r.status === 'ok');
+    const gap = results.filter(r => r.status === 'gap');
+    const p = profile;
+    const profileHtml = `
+      <div class="kv">
+        <div><b>所在区</b>${p.district}</div>
+        <div><b>所属行业</b>${p.industry}</div>
+        <div><b>企业规模</b>${p.scale}</div>
+        <div><b>国家高企</b>${p.hightech}　<b>专精特新</b>${p.zxzz}</div>
+        <div><b>营业收入</b>${p.revenue} 万元　<b>员工</b>${p.emp} 人</div>
+        <div><b>研发投入</b>${p.rnd} 万元　<b>技改投资</b>${p.tech} 万元　<b>数字化投入</b>${p.digi} 万元</div>
+      </div>`;
+    const rowsHtml = [...ok, ...gap].map(r => {
+      const st = r.status === 'ok' ? '<span class="st ok">✓ 符合</span>' : '<span class="st gap">△ 需补条件</span>';
+      const amt = r.status === 'ok' ? `<div style="font-weight:700;color:var(--primary)">¥${r.amount} 万${r.estimated ? '（估）' : ''}</div>` : '<div style="color:var(--muted)">—</div>';
+      const gaps = (r.gaps && r.gaps.length) ? `<div style="color:#b8860b;font-size:12px;margin-top:4px">待补：${r.gaps.join('；')}</div>` : '';
+      const dist = r.scope ? (r.scope.type === 'citywide' ? '全市' : (r.scope.districts || []).join('/')) : '';
+      return `<div class="r-row"><div class="l"><b>${r.name}</b><div class="s">${r.summary}</div><div class="s">来源：${r.sourceUrl ? `<a href="${r.sourceUrl}" target="_blank" rel="noopener">${r.source}</a>` : r.source}　|　区域：${dist}${r.estimated ? '　|　⚠️估算' : ''}${r.sourceUrl ? `　|　<a href="${r.sourceUrl}" target="_blank" rel="noopener" style="color:#c8102e">政策原文 ›</a>` : ''}</div>${gaps}</div><div class="r">${st}${amt}</div></div>`;
+    }).join('');
+    content.innerHTML = `
+      <div class="report">
+        <div class="r-head"><h1>深圳补贴匹配诊断报告</h1><div class="meta">生成时间 ${new Date().toLocaleString('zh-CN')}</div></div>
+        <div class="r-sec"><h3>一、企业画像</h3>${profileHtml}</div>
+        <div class="r-sec"><h3>二、预估可申报总额</h3><div class="total-big">¥${total} 万元</div><div style="font-size:12px;color:#888;margin-top:6px">按政策封顶值测算，实际以专项审计与评审为准；含 ${ok.length} 项可直接申报、${gap.length} 项需补条件。</div></div>
+        <div class="r-sec"><h3>三、匹配政策明细</h3>${rowsHtml}</div>
+        <div class="r-sec" style="font-size:12px;color:#999"><b>免责声明：</b>本报告由系统依据公开政策规则自动测算，金额与条件为简化模型，不构成申报承诺。真实申报须以官方最新指南、专项审计与专家评审结果为准；企业须确保数据真实合规（虚假材料将列入失信名单并追责）。本报告的测算数据仅在你的浏览器本地生成，未上传任何服务器。</div>
+      </div>`;
+    $('toolbar').style.display = 'flex';
+    if (autoPrint) setTimeout(function () { window.print(); }, 300);
+  }
+
+  function route() {
+    const h = location.hash || '';
+    if (h.indexOf('p=') !== -1) {
+      $('toolView').style.display = 'none';
+      $('reportView').style.display = 'block';
+      renderReport();
+    } else {
+      $('reportView').style.display = 'none';
+      $('toolView').style.display = 'block';
+    }
+  }
+
+  if ($('matchBtn')) $('matchBtn').addEventListener('click', doMatch);
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1248 @@
+[
+  {
+    "id": "sz-digi",
+    "name": "市级中小企业数字化改造专项",
+    "category": "数字化",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件",
+      "跨境"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.5,
+      "cap": 40
+    },
+    "summary": "对符合条件的中小企业数字化改造项目按不超过实际投入50%扶持，单企业最高40万元。须纳入试点名录、选择公示服务商改造并达数字化二级。",
+    "source": "2025年深圳市中小企业数字化转型城市试点专项支持项目",
+    "estimated": false,
+    "deadline": "年度批次申报",
+    "sourceUrl": "https://zxqyj.sz.gov.cn/gkmlpt/content/11/11812/post_11812387.html"
+  },
+  {
+    "id": "sz-trad",
+    "name": "传统优势产业数字化转型",
+    "category": "数字化",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "传统"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.2,
+      "cap": 500
+    },
+    "summary": "支持服装、家具、黄金珠宝、钟表、皮革、内衣、眼镜、工艺美术、化妆品等传统优势产业企业数字化改造，按不超过审定费用20%资助，单项目最高500万元。",
+    "source": "2026年企业技术改造扶持计划传统优势产业数字化转型项目",
+    "estimated": false,
+    "deadline": "年度申报（2026.2-3受理）",
+    "sourceUrl": "https://gxj.sz.gov.cn/xxgk/xxgkml/qt/tzgg/content/post_12639372.html"
+  },
+  {
+    "id": "sz-rnd",
+    "name": "深圳市企业研发资助",
+    "category": "研发",
+    "scope": {
+      "type": "citywide"
+    },
+    "requireScaleOrHightech": true,
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.1,
+      "cap": 300
+    },
+    "summary": "对建立研发台账、有实际研发投入的规上企业或国家高新技术企业，按研发费用一定比例给予资助（模型按10%、封顶300万测算）。",
+    "source": "深圳市企业研究开发资助政策（模型简化）",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.sz.gov.cn/zfgb/2026/gb1405/content/post_12679122.html"
+  },
+  {
+    "id": "sz-hightech",
+    "name": "国家高新技术企业认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "citywide"
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 20
+    },
+    "summary": "首次认定国家高新技术企业，各区通常给予10-30万元一次性奖励（模型取中间值20万）。需满足知识产权、研发费用占比、高新收入占比等条件。",
+    "source": "深圳市及各区高企认定奖励政策（综合）",
+    "estimated": true,
+    "deadline": "常年申报（批次制）",
+    "sourceUrl": "https://www.sz.gov.cn/gkmlpt/content/9/9685/mpost_9685976.html"
+  },
+  {
+    "id": "sz-zxzz",
+    "name": "市级专精特新奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "citywide"
+    },
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "省级": 10,
+        "小巨人": 50
+      },
+      "tierHint": "建议申报省级专精特新（市级奖励10万）"
+    },
+    "summary": "市级财政对首次获评省级专精特新奖励10万元、国家级小巨人奖励50万元（区级通常另有叠加）。",
+    "source": "深圳市专精特新企业奖励政策（市级部分）",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.sz.gov.cn/gkmlpt/content/9/9685/mpost_9685976.html"
+  },
+  {
+    "id": "sz-ipright",
+    "name": "市级知识产权专项（专利/软著补贴）",
+    "category": "知识产权",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件",
+      "跨境"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 5
+    },
+    "summary": "对国内发明专利授权、PCT专利申请、计算机软件著作权登记等给予每件数千至数万元不等的资助（模型取均值5万/年测算）。具体以市市场监管局年度指南为准。",
+    "source": "深圳市知识产权专项资金管理办法",
+    "estimated": true,
+    "deadline": "常年受理/年度申报",
+    "sourceUrl": "https://amr.sz.gov.cn/xxgk/qt/tzgg/content/post_11127455.html"
+  },
+  {
+    "id": "sz-talent",
+    "name": "市级人才安居/租房补贴（高层次人才）",
+    "category": "人才",
+    "scope": {
+      "type": "citywide"
+    },
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "深圳市对认定的杰出人才、领军人才、青年拔尖人才等提供购房补贴（最高600万）、租房补贴（最高4800元/月）或人才安居房。企业可为其符合条件员工申请。",
+    "source": "深圳市人才安居办法及相关补贴政策",
+    "estimated": true,
+    "deadline": "常年申报",
+    "sourceUrl": "https://www.sz.gov.cn/attachment/1/1440/1440595/9453719.pdf"
+  },
+  {
+    "id": "sz-ecomm",
+    "name": "市级跨境电商扶持（独立站/品牌出海）",
+    "category": "跨境电商",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "跨境",
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "minDigiInvest": 10,
+    "amount": {
+      "mode": "tiered",
+      "base": "revenue",
+      "steps": [
+        {
+          "upto": 5000,
+          "rate": 0.001
+        },
+        {
+          "upto": 20000,
+          "rate": 0.002
+        },
+        {
+          "upto": null,
+          "rate": 0.003
+        }
+      ],
+      "cap": 200
+    },
+    "summary": "对跨境电商独立站运营、海外仓建设、国际物流费用、品牌推广等给予支持。不同项目类型资助比例和上限不同（模型按营收阶梯0.1%-0.3%测算，封顶200万）。",
+    "source": "深圳市商务局促进电子商务高质量发展若干措施",
+    "estimated": true,
+    "deadline": "年度批次申报",
+    "sourceUrl": "https://commerce.sz.gov.cn/gkmlpt/content/11/11957/post_11957365.html"
+  },
+  {
+    "id": "ft-zxzz",
+    "name": "福田区专精特新认定支持",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "needZxzz": [
+      "省级",
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "省级": 100,
+        "小巨人": 300
+      },
+      "tierHint": "建议申报省级专精特新"
+    },
+    "summary": "福田区对入选专精特新名单的企业依条件给予支持：省级最高100万、小巨人最高300万。",
+    "source": "福田区支持都市型先进制造业高质量发展若干措施",
+    "estimated": false,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szft.gov.cn/ftqkjj/gkmlpt/content/12/12580/post_12580672.html"
+  },
+  {
+    "id": "ft-tech",
+    "name": "福田区工业投资技改支持",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minTechInvest": 50,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.1,
+      "cap": 3000
+    },
+    "summary": "福田区对企业实施的工业投资技改项目，按实际投资金额依条件给予最高3000万元支持（模型按10%测算）。",
+    "source": "福田区支持都市型先进制造业高质量发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szft.gov.cn/ftqkjj/gkmlpt/content/12/12580/post_12580672.html"
+  },
+  {
+    "id": "ft-innov",
+    "name": "福田区制造业创新中心支持",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "福田区对首次获认定的国家/省/市级制造业创新中心，依条件给予最高3000万元支持（具体以指南为准）。",
+    "source": "福田区支持都市型先进制造业高质量发展若干措施",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szft.gov.cn/ftqkjj/gkmlpt/content/12/12580/post_12580672.html"
+  },
+  {
+    "id": "ft-rnd",
+    "name": "福田区研发投入支持",
+    "category": "研发",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "requireScaleOrHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.05,
+      "cap": 100
+    },
+    "summary": "福田区对规上企业或高企的研发投入按一定比例给予配套支持（模型按5%、封顶100万测算）。与市级研发资助可叠加。",
+    "source": "福田区科技创新发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szft.gov.cn/ftqkjj/gkmlpt/content/12/12580/post_12580672.html"
+  },
+  {
+    "id": "ft-rent",
+    "name": "福田区科技创新园区房租补贴",
+    "category": "房租",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "福田"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "软件",
+      "制造"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 30
+    },
+    "summary": "入驻福田区认定科技创新园区的国高/专精特新/中小科技企业，可享受房租减免或补贴（模型取年均30万测算）。具体以园区政策为准。",
+    "source": "福田区科技创新园区管理办法",
+    "estimated": true,
+    "deadline": "常年申报",
+    "sourceUrl": "https://sf.sz.gov.cn/gfxwjcx/qjgfxwj/ftq/qzfbmgfxwj/qzbm/qkjhgyxxhj/content/post_10644933.html"
+  },
+  {
+    "id": "lg-tech",
+    "name": "龙岗区工业企业技术改造扶持",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minTechInvest": 100,
+    "amount": {
+      "mode": "tiered",
+      "base": "tech",
+      "steps": [
+        {
+          "upto": 2000,
+          "rate": 0.1
+        },
+        {
+          "upto": 10000,
+          "rate": 0.08
+        },
+        {
+          "upto": null,
+          "rate": 0.05
+        }
+      ],
+      "cap": 2000
+    },
+    "summary": "龙岗制造业/科技企业年度技改投资分档资助：100-2000万部分10%；2000-1亿超出部分8%；1亿以上超出部分5%。单企业年最高2000万。",
+    "source": "龙岗区工业和信息化产业发展专项资金实施细则（2025.12施行）",
+    "estimated": false,
+    "deadline": "年度申报（2026.1-3受理）",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12552482.html"
+  },
+  {
+    "id": "lg-rnd",
+    "name": "龙岗区企业研发投入补贴",
+    "category": "研发",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "requireScaleOrHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "minRnd": 100,
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.08,
+      "cap": 200
+    },
+    "summary": "龙岗区对规上企业或高企的研发投入按比例给予支持（模型按8%、封顶200万测算）。与市级研发资助可叠加。",
+    "source": "龙岗区工业和信息化产业发展专项资金实施细则",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12552482.html"
+  },
+  {
+    "id": "lg-zxzz",
+    "name": "龙岗区专精特新/单项冠军奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "小巨人": 100
+      },
+      "tierHint": "建议申报国家级小巨人（龙岗区奖100万；重点小巨人/单项冠军最高200万）"
+    },
+    "summary": "龙岗区对获评专精特新小巨人给予最高100万；重点小巨人最高200万；国家级制造业单项冠军最高200万。",
+    "source": "龙岗区企业培育专项扶持细则",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12645660.html"
+  },
+  {
+    "id": "lg-digi",
+    "name": "龙岗区数字化转型场景补贴",
+    "category": "数字化",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minDigiInvest": 20,
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.5,
+      "cap": 20
+    },
+    "summary": "龙岗区对制造业/科技企业运用工业互联网/AI/云化MES等数字化转型项目，按实际投入50%补贴，单企业最高20万元。",
+    "source": "龙岗区工业和信息化产业发展专项资金实施细则",
+    "estimated": false,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12552482.html"
+  },
+  {
+    "id": "lg-hightech",
+    "name": "龙岗区高新技术企业认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "triggerNotHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 15
+    },
+    "summary": "龙岗区对首次认定或迁入的国家高新技术企业给予一次性奖励（模型取15万，以官方最新为准）。",
+    "source": "龙岗区科技创新专项资金管理办法",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/flfg/bmgfxwj/content/post_12552482.html"
+  },
+  {
+    "id": "lg-rent",
+    "name": "龙岗区创新产业园租金补贴",
+    "category": "房租",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 20
+    },
+    "summary": "入驻龙岗区认定创新产业园的国高/专精特新/科技型中小企业，可享受租金优惠或补贴（模型取年均20万测算）。具体以园区及区科创政策为准。",
+    "source": "龙岗区科技创新暨创新型产业用房管理暂行办法",
+    "estimated": true,
+    "deadline": "常年申报",
+    "sourceUrl": "https://www.lg.gov.cn/xxgk/zwgk/zfgb/2023/gb33/content/post_12626895.html"
+  },
+  {
+    "id": "lg-ipright",
+    "name": "龙岗区知识产权优势企业奖励",
+    "category": "知识产权",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙岗"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 10
+    },
+    "summary": "龙岗区对知识产权优势示范企业、专利奖获奖单位等给予10-50万不等奖励（模型取10万测算）。",
+    "source": "龙岗区知识产权专项资金实施细则",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.lg.gov.cn/gab/tzgg/content/post_12599947.html"
+  },
+  {
+    "id": "ns-tech",
+    "name": "南山区技改券",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minTechInvest": 50,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.01,
+      "cap": 1000
+    },
+    "summary": "南山区对符合条件的企业工业技改或设备购置项目，按不超过经审定投资额的1%补贴，每家企业每年最高1000万元。",
+    "source": "南山区支持产业发展六个券行动方案",
+    "estimated": false,
+    "deadline": "2026.2.9-3.6受理",
+    "sourceUrl": "https://www.szns.gov.cn/ztzl/slh/zcfg/content/post_12515370.html"
+  },
+  {
+    "id": "ns-model",
+    "name": "南山区模型券（AI投入补贴）",
+    "category": "数字化",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "软件",
+      "制造"
+    ],
+    "minDigiInvest": 10,
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.5,
+      "cap": 100
+    },
+    "summary": "南山区企业通过云服务商搭建大模型应用/AI智能体/AI硬件，按不超过上季度实际投入50%补贴，单家每季度最高100万元。",
+    "source": "南山区支持产业发展六个券行动方案",
+    "estimated": false,
+    "deadline": "季度申报",
+    "sourceUrl": "https://www.szns.gov.cn/ztzl/slh/zcfg/content/post_12515370.html"
+  },
+  {
+    "id": "ns-zxzz",
+    "name": "南山区小巨人认定奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 100
+    },
+    "summary": "注册地或迁入南山区的国家级小巨人企业，一次性奖励100万元。",
+    "source": "2026年深圳市及各区专精特新补贴政策汇总",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szns.gov.cn/ztzl/slh/zcfg/content/post_12515370.html"
+  },
+  {
+    "id": "ns-zxzz-digi",
+    "name": "南山区小巨人数字化转型补贴",
+    "category": "数字化",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.5,
+      "cap": 200
+    },
+    "summary": "南山区小巨人企业数字化转型投入补贴比例最高50%，每年最高200万元。",
+    "source": "2026年深圳市及各区专精特新补贴政策汇总",
+    "estimated": false,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szns.gov.cn/ztzl/slh/zcfg/content/post_12515370.html"
+  },
+  {
+    "id": "ns-rnd",
+    "name": "南山区研发投入支持",
+    "category": "研发",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "requireScaleOrHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "软件",
+      "制造"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.05,
+      "cap": 150
+    },
+    "summary": "南山区对规上企业或高企的研发投入给予配套支持（模型按5%、封顶150万测算），与市级可叠加。",
+    "source": "南山区促进产业科技创新若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szns.gov.cn/attachment/1/1284/1284678/10535180.docx"
+  },
+  {
+    "id": "ns-hightech",
+    "name": "南山区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "南山"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 30
+    },
+    "summary": "南山区对首次认定国家高新技术企业给予一次性奖励（模型取30万，以官方最新为准）。",
+    "source": "南山区科技创新政策",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szns.gov.cn/attachment/1/1284/1284678/10535180.docx"
+  },
+  {
+    "id": "ba-renovate",
+    "name": "宝安区重点企业综合改造补贴",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "requireScale": [
+      "规上"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "宝安区鼓励上市/国家级单项冠军/国家级小巨人/年产值5亿+工业企业长租生产研发用房并综合改造，给予补贴（比例以指南为准，需5年以上租约+备案）。",
+    "source": "宝安区重点企业综合改造补贴项目申报通知（2025.12）",
+    "estimated": true,
+    "deadline": "2025.12.29-2026.2.28受理",
+    "sourceUrl": "https://www.baoan.gov.cn/jjcj/zwgk/qt/tzgg/content/post_12576256.html"
+  },
+  {
+    "id": "ba-zxzz",
+    "name": "宝安区专精特新奖励（含市区叠加）",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "省级": 20,
+        "小巨人": 168
+      },
+      "tierHint": "建议申报省级专精特新（宝安区奖20万）"
+    },
+    "summary": "宝安区对省级专精特新奖励20万、国家级小巨人市区合计168万（市级50+区级118）。",
+    "source": "宝安区关于支持专精特新企业高质量发展的若干措施",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.baoan.gov.cn/baqfzx/gkmlpt/content/11/11935/mpost_11935867.html"
+  },
+  {
+    "id": "ba-zxzz-loan",
+    "name": "宝安区小巨人贷款贴息",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 200
+    },
+    "summary": "宝安区对国家级小巨人企业，按实际支付利息/担保/保证保险费用的70%、合计不超融资金额3.5%、每年最高200万元资助。",
+    "source": "深圳宝安区专精特新奖补政策解读",
+    "estimated": false,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.baoan.gov.cn/baqfzx/gkmlpt/content/11/11854/post_11854036.html"
+  },
+  {
+    "id": "ba-tech",
+    "name": "宝安区技术改造补贴",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "minTechInvest": 100,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.08,
+      "cap": 1000
+    },
+    "summary": "宝安区对企业技术改造项目按投资额一定比例给予补贴（模型按8%、封顶1000万测算）。",
+    "source": "宝安区技术改造补贴项目申报指南",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.baoan.gov.cn/jjcj/zwgk/qt/tzgg/content/post_12262220.html"
+  },
+  {
+    "id": "ba-hightech",
+    "name": "宝安区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "宝安"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 20
+    },
+    "summary": "宝安区对首次认定国家高新技术企业给予一次性奖励（模型取20万，以官方最新为准）。",
+    "source": "宝安区科技创新政策",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.baoan.gov.cn/bakj/gkmlpt/content/8/8409/post_8409472.html"
+  },
+  {
+    "id": "lh-zxzz",
+    "name": "龙华区专精特新奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙华"
+      ]
+    },
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "省级": 20,
+        "小巨人": 100,
+        "重点小巨人": 200
+      },
+      "tierHint": "建议申报省级专精特新（龙华区奖20万）"
+    },
+    "summary": "龙华区对市级专精特新一次性20万、小巨人100万、重点小巨人最高200万；另有国家/省/市1:1配套。",
+    "source": "2026年深圳市及各区专精特新补贴政策汇总",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szlhq.gov.cn/bmxxgk/jjcjj/zcfg_124209/zcwj_125469/content/post_11511931.html"
+  },
+  {
+    "id": "lh-tech",
+    "name": "龙华区工业技改支持",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙华"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "minTechInvest": 100,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.1,
+      "cap": 4000
+    },
+    "summary": "龙华区支持工业企业加大技改投入、推动大规模设备更新，对符合条件的技改项目给予资金支持（模型按投资额10%、封顶4000万测算）。",
+    "source": "龙华区关于新形势下鼓励企业加大工业投资力度推动大规模设备更新的若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szlhq.gov.cn/lhjjcjj/gkmlpt/content/11/11561/post_11561794.html"
+  },
+  {
+    "id": "lh-hightech2",
+    "name": "龙华区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙华"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 20
+    },
+    "summary": "龙华区对首次认定国家高新技术企业给予一次性奖励（模型取20万，以官方最新为准）。",
+    "source": "龙华区科技创新专项资金实施细则",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szlh.gov.cn/lhqyfwzx/gkmlpt/content/11/11848/post_11848253.html"
+  },
+  {
+    "id": "lh-digi",
+    "name": "龙华区数字化转型支持",
+    "category": "数字化",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "龙华"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "软件"
+    ],
+    "minDigiInvest": 30,
+    "amount": {
+      "mode": "percent",
+      "base": "digi",
+      "rate": 0.3,
+      "cap": 50
+    },
+    "summary": "龙华区对企业上云、工业互联网应用、智能制造改造等项目按投入30%给予支持（模型测算，封顶50万）。",
+    "source": "龙华区数字化转型若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://sf.sz.gov.cn/gfxwjcx/qjgfxwj/lh/qzfgfxwj/qzfbgs/content/post_11220449.html"
+  },
+  {
+    "id": "gm-tech",
+    "name": "光明区技术改造奖励",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "光明"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "minTechInvest": 100,
+    "amount": {
+      "mode": "tiered",
+      "base": "tech",
+      "steps": [
+        {
+          "upto": 10000,
+          "rate": 0.15
+        },
+        {
+          "upto": null,
+          "rate": 0.05
+        }
+      ],
+      "cap": 4000
+    },
+    "summary": "光明区对企业上年度技改项目，年度建设费用1亿及以下部分按15%奖励（年最高1000万）；超出1亿部分按5%（最高3000万）。单家年最高4000万。",
+    "source": "光明区关于推动制造业高质量发展的若干措施（2026.5施行）",
+    "estimated": false,
+    "deadline": "年度申报（有效期至2028.12）",
+    "sourceUrl": "https://www.szgm.gov.cn/xxgk/xqgwhxxgkml/zcfg_116521/qbmgfxwj/content/post_12765979.html"
+  },
+  {
+    "id": "gm-hightech",
+    "name": "光明区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "光明"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 5
+    },
+    "summary": "光明区对首次通过国家高新技术企业认定的，给予一次性最高5万元奖励。",
+    "source": "光明区关于推动制造业高质量发展的若干措施",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szgm.gov.cn/xxgk/xqgwhxxgkml/zcfg_116521/qbmgfxwj/content/post_12765979.html"
+  },
+  {
+    "id": "gm-zxzz",
+    "name": "光明区小巨人/单项冠军奖励",
+    "category": "专精特新",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "光明"
+      ]
+    },
+    "needZxzz": [
+      "小巨人"
+    ],
+    "amount": {
+      "mode": "byTier",
+      "tierField": "zxzz",
+      "byTier": {
+        "小巨人": 100
+      },
+      "tierHint": "建议申报国家级小巨人（光明区奖100万；单项冠军200万）"
+    },
+    "summary": "光明区对获评小巨人一次性最高100万、国家级制造业单项冠军最高200万。",
+    "source": "光明区关于推动制造业高质量发展的若干措施",
+    "estimated": false,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szgm.gov.cn/xxgk/xqgwhxxgkml/zcfg_116521/qbmgfxwj/content/post_12765979.html"
+  },
+  {
+    "id": "gm-rnd",
+    "name": "光明区研发投入支持",
+    "category": "研发",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "光明"
+      ]
+    },
+    "requireScaleOrHightech": true,
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "软件"
+    ],
+    "amount": {
+      "mode": "percent",
+      "base": "rnd",
+      "rate": 0.1,
+      "cap": 200
+    },
+    "summary": "光明区对规上企业或高企研发投入按10%给予支持（封顶200万），与市级可叠加。",
+    "source": "光明区科技创新扶持",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szgm.gov.cn/szgm/132104/kjcx/252751/content/post_11127293.html"
+  },
+  {
+    "id": "ps-newenergy",
+    "name": "坪山区新能源产业固投奖励",
+    "category": "技改",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "坪山"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "minTechInvest": 2000,
+    "amount": {
+      "mode": "percent",
+      "base": "tech",
+      "rate": 0.02,
+      "cap": 200
+    },
+    "summary": "坪山区对新能源产业前沿/紧缺/关键领域、无自有产业用地、首年固投2000万+的企业，按实际固投2%给予最高200万一次性资助。",
+    "source": "坪山区落实双碳战略推动新能源产业高质量发展若干措施",
+    "estimated": false,
+    "deadline": "年度申报（有效期3年）",
+    "sourceUrl": "https://www.szpsq.gov.cn/gkmlpt/content/12/12264/mpost_12264577.html"
+  },
+  {
+    "id": "ps-biomed",
+    "name": "坪山区生物医药产业专项",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "坪山"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "坪山区对生物医药企业的新药/医疗器械注册、临床试验、GMP厂房建设等给予支持（最高可达数百万）。具体以区生物产业政策为准。",
+    "source": "坪山区生物医药产业创新发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szpsq.gov.cn/gkmlpt/content/12/12203/post_12203973.html"
+  },
+  {
+    "id": "ps-hightech",
+    "name": "坪山区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "坪山"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 30
+    },
+    "summary": "坪山区对首次认定国家高新技术企业给予一次性奖励（模型取30万，以官方最新为准）。",
+    "source": "坪山区科技创新专项资金实施细则",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szpsq.gov.cn/ghb/gfxwj/content/post_9282403.html"
+  },
+  {
+    "id": "yt-hightech",
+    "name": "盐田区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "盐田"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 10
+    },
+    "summary": "盐田区对首次认定国家高新技术企业给予一次性奖励（模型取10万，以官方最新为准）。",
+    "source": "盐田区科技创新政策（通用惯例）",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.yantian.gov.cn/yttztghqyfwzx/attachment/1/1453/1453813/11348840.docx"
+  },
+  {
+    "id": "yt-logistics",
+    "name": "盐田区物流/航运产业补贴",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "盐田"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "跨境",
+      "其他"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "盐田区对港口物流、冷链物流、航运服务等企业给予航线/仓储/信息化建设补贴。具体以区现代物流业政策为准。",
+    "source": "盐田区现代物流业发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.yantian.gov.cn/gkmlpt/content/5/5736/post_5736302.html"
+  },
+  {
+    "id": "dp-lowalt",
+    "name": "大鹏新区低空经济奖励",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "大鹏"
+      ]
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技",
+      "其他"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "大鹏新区对低空经济研发/制造/销售/运营企业，按营收或产值首次达规模阶梯给予奖励（如制造类产值首达1亿奖100万）。具体以指南为准。",
+    "source": "大鹏新区促进低空经济产业高质量发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.dpxq.gov.cn/ztzl/tzdp/tzfw/yhzc/content/post_12203044.html"
+  },
+  {
+    "id": "dp-tourism",
+    "name": "大鹏新区文旅/生物产业补贴",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "大鹏"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "制造",
+      "其他"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "大鹏新区对生物医药、生命健康、文旅融合等领域企业提供落户/研发/场地支持。具体以区产业政策为准。",
+    "source": "大鹏新区产业发展相关政策",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.dpxq.gov.cn/xxgk/xxgk/zcfg/wj/xqgfxwj/xqzhb/content/post_12927276.html"
+  },
+  {
+    "id": "lh-hightech",
+    "name": "罗湖区高企认定奖励",
+    "category": "高企",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "罗湖"
+      ]
+    },
+    "triggerNotHightech": true,
+    "amount": {
+      "mode": "fixed",
+      "value": 10
+    },
+    "summary": "罗湖区对首次认定国家高新技术企业给予一次性奖励（模型取10万，以官方最新为准）。",
+    "source": "罗湖区科技创新政策（通用惯例）",
+    "estimated": true,
+    "deadline": "认定后申报",
+    "sourceUrl": "https://www.szlh.gov.cn/lhqyfwzx/gkmlpt/content/11/11848/post_11848253.html"
+  },
+  {
+    "id": "lh-service",
+    "name": "罗湖区专业服务业/总部经济支持",
+    "category": "其他",
+    "scope": {
+      "type": "district",
+      "districts": [
+        "罗湖"
+      ]
+    },
+    "applicableIndustries": [
+      "科技",
+      "软件",
+      "其他"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "罗湖区对专业服务业（律所/会计/咨询/设计等）、总部企业给予落户/办公用房/经营增长等奖励。具体以区总部经济及专业服务政策为准。",
+    "source": "罗湖区总部经济及专业服务业发展若干措施",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://www.szlh.gov.cn/qgbmxxgkml/qqyfwzx/fdzdgknr/zcwj/content/post_11848219.html"
+  },
+  {
+    "id": "sz-green",
+    "name": "市级绿色制造/节能降碳补贴",
+    "category": "其他",
+    "scope": {
+      "type": "citywide"
+    },
+    "applicableIndustries": [
+      "制造",
+      "科技"
+    ],
+    "amount": {
+      "mode": "fixed",
+      "value": 0
+    },
+    "summary": "深圳市对绿色工厂、绿色供应链、工业节能降碳改造项目给予支持（最高数百万元）。具体以市工信局年度绿色制造试点示范申报指南为准。",
+    "source": "深圳市工业和信息化局绿色发展相关项目",
+    "estimated": true,
+    "deadline": "年度申报",
+    "sourceUrl": "https://gxj.sz.gov.cn/xxgk/xxgkml/qt/tzgg/content/post_12698135.html"
+  }
+]
