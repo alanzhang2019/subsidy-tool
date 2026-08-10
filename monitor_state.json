@@ -1,16 +1,16 @@
 {
   "feeds": {
     "hrss": {
-      "lastDate": "2026-08-06",
+      "lastDate": "2026-08-07",
       "lastTitle": "深圳市人力资源和社会保障局关于发布深圳市第十六届职工技术创新运动会暨2026年...",
       "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_12926957.html"
     },
     "amr": {
-      "lastDate": "2026-08-13",
+      "lastDate": "2026-08-14",
       "lastTitle": "关于深圳市市场监督管理局在线调解平台系统下线的通告",
       "lastUrl": "https://amr.sz.gov.cn/xxgk/qt/tzgg/content/post_12928535.html"
     }
   },
-  "lastRun": "2026-08-08T16:20:10.226Z",
+  "lastRun": "2026-08-10T03:43:50.184Z",
   "dead": {}
 }
