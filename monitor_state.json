@@ -1,9 +1,9 @@
 {
   "feeds": {
     "hrss": {
-      "lastDate": "2026-08-07",
-      "lastTitle": "深圳市人力资源和社会保障局关于发布深圳市第十六届职工技术创新运动会暨2026年...",
-      "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_12926957.html"
+      "lastDate": "2026-08-17",
+      "lastTitle": "2026年度第31批次职业技能提升补贴公示",
+      "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_12938332.html"
     },
     "amr": {
       "lastDate": "2026-08-14",
@@ -11,6 +11,6 @@
       "lastUrl": "https://amr.sz.gov.cn/xxgk/qt/tzgg/content/post_12928535.html"
     }
   },
-  "lastRun": "2026-08-10T03:43:50.184Z",
+  "lastRun": "2026-08-17T02:52:37.468Z",
   "dead": {}
 }
