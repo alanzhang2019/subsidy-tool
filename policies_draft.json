@@ -10,5 +10,17 @@
     "estimated": true,
     "collectedAt": "2026-08-17T02:52:37.468Z",
     "collectedFrom": "市人力资源和社会保障局"
+  },
+  {
+    "id": "draft-hrss-2026-08-24",
+    "name": "2026年度第11批次职业技能评价补贴、第32批次职业技能提升补贴公示",
+    "category": "待分类(自动采集)",
+    "scope": "市人力资源和社会保障局",
+    "sourceUrl": "https://hrss.sz.gov.cn/tzgg/content/post_12947577.html",
+    "summary": "区局自动采集，待人工核实分类/金额/申报条件后转正",
+    "needsReview": true,
+    "estimated": true,
+    "collectedAt": "2026-08-24T02:55:41.739Z",
+    "collectedFrom": "市人力资源和社会保障局"
   }
 ]
