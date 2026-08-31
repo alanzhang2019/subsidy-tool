@@ -1,9 +1,9 @@
 {
   "feeds": {
     "hrss": {
-      "lastDate": "2026-08-24",
-      "lastTitle": "2026年度第11批次职业技能评价补贴、第32批次职业技能提升补贴公示",
-      "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_12947577.html"
+      "lastDate": "2026-08-31",
+      "lastTitle": "2026年7月份工程建设领域农民工工资保证金缴存情况",
+      "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_12960456.html"
     },
     "amr": {
       "lastDate": "2026-08-14",
@@ -11,6 +11,6 @@
       "lastUrl": "https://amr.sz.gov.cn/xxgk/qt/tzgg/content/post_12928535.html"
     }
   },
-  "lastRun": "2026-08-24T02:55:41.739Z",
+  "lastRun": "2026-08-31T07:54:12.248Z",
   "dead": {}
 }
