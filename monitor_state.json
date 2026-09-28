@@ -1,9 +1,9 @@
 {
   "feeds": {
     "hrss": {
-      "lastDate": "2026-09-21",
-      "lastTitle": "2026年度第36批次职业技能提升补贴公示",
-      "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_12991685.html"
+      "lastDate": "2026-09-28",
+      "lastTitle": "2026年度第37批次职业技能提升补贴公示",
+      "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_13000411.html"
     },
     "amr": {
       "lastDate": "2026-08-14",
@@ -11,6 +11,6 @@
       "lastUrl": "https://amr.sz.gov.cn/xxgk/qt/tzgg/content/post_12928535.html"
     }
   },
-  "lastRun": "2026-09-21T07:25:35.190Z",
+  "lastRun": "2026-09-28T07:59:14.510Z",
   "dead": {}
 }
