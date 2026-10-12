@@ -82,5 +82,17 @@
     "estimated": true,
     "collectedAt": "2026-10-05T07:57:12.723Z",
     "collectedFrom": "市市场监督管理局"
+  },
+  {
+    "id": "draft-hrss-2026-10-12",
+    "name": "2026年度第38批次职业技能提升补贴公示",
+    "category": "待分类(自动采集)",
+    "scope": "市人力资源和社会保障局",
+    "sourceUrl": "https://hrss.sz.gov.cn/tzgg/content/post_13015791.html",
+    "summary": "区局自动采集，待人工核实分类/金额/申报条件后转正",
+    "needsReview": true,
+    "estimated": true,
+    "collectedAt": "2026-10-12T08:17:54.677Z",
+    "collectedFrom": "市人力资源和社会保障局"
   }
 ]
