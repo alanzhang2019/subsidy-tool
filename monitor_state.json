@@ -1,9 +1,9 @@
 {
   "feeds": {
     "hrss": {
-      "lastDate": "2026-10-26",
-      "lastTitle": "深圳市人力资源和社会保障局领导接访日公告",
-      "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_13039231.html"
+      "lastDate": "2026-11-02",
+      "lastTitle": "第五批深圳市港澳青年创新创业基地拟认定名单公示",
+      "lastUrl": "https://hrss.sz.gov.cn/tzgg/content/post_13049508.html"
     },
     "amr": {
       "lastDate": "2026-10-29",
@@ -11,6 +11,6 @@
       "lastUrl": "https://amr.sz.gov.cn/xxgk/qt/tzgg/content/post_13038806.html"
     }
   },
-  "lastRun": "2026-10-26T07:13:42.120Z",
+  "lastRun": "2026-11-02T08:38:00.571Z",
   "dead": {}
 }
